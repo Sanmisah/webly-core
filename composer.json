@@ -9,7 +9,10 @@
         }
     },
     "require": {
-    },    
+        "codeigniter4/shield": "^1.0@beta"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,    
     "authors": [
         {
             "name": "Sanjeev Divekar",
