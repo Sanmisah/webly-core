@@ -1,0 +1,21 @@
+{
+    "name": "webly/core",
+    "description": "Webly Core Plugin",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Webly\\Core\\": "src/"
+        }
+    },
+    "require": {
+        "codeigniter4/shield": "dev-develop",
+        "tatter/visits": "^v2.0"
+    },    
+    "authors": [
+        {
+            "name": "Sanjeev Divekar",
+            "email": "sanjeev@sanmisha.com"
+        }
+    ]
+}
