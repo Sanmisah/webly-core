@@ -7,16 +7,14 @@
         "psr-4": {
             "Webly\\Core\\": "src/"
         }
-    },
-    "require": {
-        "codeigniter4/shield": "^1.0@beta"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,    
+    },   
     "authors": [
         {
             "name": "Sanjeev Divekar",
             "email": "sanjeev@sanmisha.com"
         }
-    ]
+    ],
+    "require": {
+        "codeigniter4/shield": "^1.0@beta"
+    }
 }
