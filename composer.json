@@ -9,8 +9,6 @@
         }
     },
     "require": {
-        "codeigniter4/shield": "dev-develop",
-        "tatter/visits": "^v2.0"
     },    
     "authors": [
         {
