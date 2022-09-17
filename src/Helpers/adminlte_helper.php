@@ -28,6 +28,8 @@ if (! function_exists('input'))
 			$options = $extra['input']['options'];
 			unset($extra['input']['options']);
 		}
+
+		$help = isset($extra['help']) && !empty($extra['help']) ? $extra['help'] : '';
 		
 
 		$divAttr = "";
@@ -55,30 +57,33 @@ if (! function_exists('input'))
 
 		$value = $extra['input']['value'];
 		unset($extra['input']['value']);
+
 		if($type == 'textarea') {
 			$str .= form_textarea($data, $value, $extra['input']);
+			$str .= "<span class='form-text'>{$help}</span>";
 		} elseif($type == 'select') {
 			$str .= form_dropdown($data, $options, $value, $extra['input']);
+			$str .= "<span class='form-text'>{$help}</span>";
 		} elseif($type == 'file') {
 			$str .= '<div class="custom-file">';
 			$str .= form_upload($data, $value, $extra['input'], $type);
 			$str .= '<label class="custom-file-label" for="'.$data.'">Choose file</label>';
-
+			$str .= "<span class='form-text'>{$help}</span>";
 			if(!empty($error)) {
 				$error = str_replace($data, humanize($data), $error);
 				$error = str_replace('field', '', $error);
 				$str .= "<span class='error invalid-feedback'>{$error}</span>";
 			}
-	
-
 			$str .= '</div>';
 		} else {
 			$str .= form_input($data, $value, $extra['input'], $type);
+			$str .= "<span class='form-text'>{$help}</span>";
 		}
 
 		if(!empty($error) && !in_array($type, ['file'])) {
 			$error = str_replace($data, humanize($data), $error);
 			$error = str_replace('field', '', $error);
+			$str .= "<span class='form-text'>{$help}</span>";
 			$str .= "<span class='error invalid-feedback'>{$error}</span>";
 		}
 		$str .= '</div>';

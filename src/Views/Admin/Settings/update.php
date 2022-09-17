@@ -13,7 +13,7 @@
                     </li>
                 </ul>
             </div>
-            <form method="post">
+            <?= form_open_multipart() ?>
                 <?= csrf_field() ?>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-three-tabContent">
@@ -32,10 +32,17 @@
                                     ]
                                 ], 'select');                                 
 
-                                echo input('global_metadata', [
+                                echo input('logo', ['help' => template_info('image-size.logo')], 'file');
+                            ?>
+                                <?php if(service('settings')->get('App.logo')) : ?>
+                                    <?= img(service('settings')->get('App.logo'), false, ['class'=>'img-fluid']) ?>
+                                <?php endif; ?>   
+                            <?php
+
+                                echo input('global_tags', [
                                     'input' => [
                                         'rows'=>5,
-                                        'value'=> service('settings')->get('App.global_metadata'), 
+                                        'value'=> service('settings')->get('App.global_tags'), 
                                         'html_escape' => false
                                     ]
                                 ], 
@@ -172,5 +179,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
+    <script src="/templates/adminlte3/dist/js/pages/common.js"></script>
     <script src="/templates/adminlte3/dist/js/pages/settings.js"></script>
+    <script src="/templates/adminlte3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <?= $this->endSection() ?>

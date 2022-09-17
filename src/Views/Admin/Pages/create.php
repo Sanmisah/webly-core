@@ -83,10 +83,10 @@
                 </div>
                 <div class="card-body">                
                     <?php
-                        echo input('protocol', [
+                        echo input('layout', [
                             'input' => [
                                 'value'=> $page->layout, 
-                                'options' => ['mail'=>'mail', 'sendmail'=>'sendmail', 'smtp'=>'smtp']
+                                'options' => service('webly')->getLayouts()
                             ]
                         ],
                         'select');                    

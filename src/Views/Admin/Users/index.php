@@ -39,7 +39,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                <?= $pager->links() ?>
+                <?= $pager->links('default', 'default_adminlte3') ?>
             </div>            
         </div>
         <!-- /.card -->

@@ -15,7 +15,8 @@
                             ]
                         ]); 
                     ?>
-                    <input type="hidden" name="menu_items" id="menu_items" value="<?= $menu->menu_items ?>">
+                    <!-- <input type="hidden" name="menu_items" id="menu_items" value="<?php //$menu->menu_items ?>"> -->
+                    <textarea name="menu_items" id="menu_items" rows=10 cols=100><?= $menu->menu_items ?></textarea>
                     <div class="row">
                         <div class="col-lg-6">
                             <?php 

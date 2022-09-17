@@ -61,11 +61,11 @@ if(!empty($query->getResult())) {
     $Menus = new Menus();
     $menus = $Menus->findAll();
 
-    function getChildren($items, $slug, &$routes) {
+    function getChildren($items, &$routes) {
         if(!empty($items)) {
             foreach($items as $item) {        
-                $routes->get("$slug/{$item->slug}", "{$item->route}", ['filter' => 'visits']);
-                getChildren($item->children, "$slug/{$item->slug}", $routes);
+                $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                getChildren($item->children, $routes);
             }
         } else {
             return false;
@@ -76,7 +76,7 @@ if(!empty($query->getResult())) {
         $menuItems = json_decode($menu->menu_items);
         foreach($menuItems as $item) {
             $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
-            getChildren($item->children, $item->slug, $routes);
+            getChildren($item->children, $routes);
         }
     }
 }

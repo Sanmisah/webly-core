@@ -48,6 +48,18 @@ class MenusController extends BaseController
         ]);        
     }    
 
+
+    function getChildren(&$menu) {
+        if(!empty($menu->children)) {
+            foreach($menu->children as $i => $item) {
+                $menu->children[$i]->slug = $menu->slug . '/' . url_title($item->value, '-', true);     
+                $this->getChildren($item);
+            }
+        } else {
+            return false;
+        }
+    }    
+
     public function update($id)
     {
         $Menus = new Menus();
@@ -62,7 +74,19 @@ class MenusController extends BaseController
             ]);
 
             if($inputs) {
-                $menu->fill($data);
+                $menu->fill($data);                
+                $menuItems = json_decode($menu->menu_items);
+                foreach($menuItems as $i=>$item) {
+                    if($item->route != "\\Webly\\Core\\Controllers\\PagesController::display/1") {
+                        $menuItems[$i]->slug = url_title($menuItems[$i]->value, '-', true);
+                    } else {
+                        $menuItems[$i]->slug = '/';
+                    }
+                    $this->getChildren($menuItems[$i]);
+                }
+
+                $menu->menu_items = json_encode($menuItems);
+
                 $Menus->save($menu);
 
                 return redirect()->to('/admin/menus')->with('success', 'Saved successfully');

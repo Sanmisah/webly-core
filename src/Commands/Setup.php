@@ -59,7 +59,7 @@ class Setup extends BaseCommand
     private function addTestEmailConfig(): void
     {
         service('settings')->set('App.website_title', 'My Website');
-        service('settings')->set('App.template', 'webly/');
+        service('settings')->set('App.template', 'Webly/');
 
         service('settings')->set('Email.fromEmail', 'noreply@sanmishatech.com');
         service('settings')->set('Email.fromName', 'Sanmisha Test');

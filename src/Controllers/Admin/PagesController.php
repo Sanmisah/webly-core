@@ -36,7 +36,7 @@ class PagesController extends BaseController
                     'label' => 'Image File',
                     'rules' => 'is_image[featured_image]'
                         . '|mime_in[featured_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
-                        . '|max_size[featured_image,1024]'
+                        . '|max_size[featured_image,500]'
                 ],
                 'page_title' => 'required|max_length[60]|is_unique[pages.title, id, {id}]',
                 'meta_description' => 'required|max_length[160]',
@@ -48,7 +48,7 @@ class PagesController extends BaseController
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
                     $page->featured_image = 'writable/uploads/' . $featuredImage->store();
-                }                
+                }
                 $Pages->save($page);
 
                 return redirect()->to('/admin/pages/update/'.$Pages->insertID())->with('success', 'Saved successfully');

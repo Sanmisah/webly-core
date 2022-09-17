@@ -11,14 +11,26 @@ class SettingsController extends BaseController
         if ($this->request->getMethod() === 'post') {
             $inputs = $this->validate([
                 'website_title' => 'required|min_length[5]|max_length[255]',
+                'logo' => [
+                    'label' => 'Logo',
+                    'rules' => 'is_image[logo]'
+                        . '|mime_in[logo,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+                        . '|max_size[logo,500]'
+                ],                
                 'from_email' => 'required|valid_email',
                 'from_name' => 'required',
             ]);
-           
+
             if($inputs) {
                 service('settings')->set("App.website_title", $this->request->getVar('website_title'));
                 service('settings')->set("App.template", $this->request->getVar('template'));
-                service('settings')->set("App.global_metadata", $this->request->getVar('global_metadata'));
+
+                $logo = $this->request->getFile('logo');
+                if ($logo->isValid() && !$logo->hasMoved()) {
+                    service('settings')->set("App.logo", 'writable/uploads/' . $logo->store());
+                }                
+
+                service('settings')->set("App.global_tags", $this->request->getVar('global_tags'));
 
                 service('settings')->set("Email.fromEmail", $this->request->getVar('from_email'));
                 service('settings')->set("Email.fromName", $this->request->getVar('from_name'));
