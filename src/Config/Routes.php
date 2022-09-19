@@ -26,6 +26,12 @@ $routes->group('admin', function ($routes) {
     $routes->match(['get', 'post'], 'blocks/update/(:num)', '\Webly\Core\Controllers\Admin\BlocksController::update/$1', ['filter' => 'permission:admin.blocks']);
     $routes->get('blocks/delete/(:num)', '\Webly\Core\Controllers\Admin\BlocksController::delete/$1', ['filter' => 'permission:admin.blocks']);
 
+    $routes->get('banners', '\Webly\Core\Controllers\Admin\BannersController::index', ['filter' => 'permission:admin.banners']);
+    $routes->post('banners/sort', '\Webly\Core\Controllers\Admin\BannersController::sort', ['filter' => 'permission:admin.banners']);
+    $routes->match(['get', 'post'], 'banners/create', '\Webly\Core\Controllers\Admin\BannersController::create', ['filter' => 'permission:admin.banners']);
+    $routes->match(['get', 'post'], 'banners/update/(:num)', '\Webly\Core\Controllers\Admin\BannersController::update/$1', ['filter' => 'permission:admin.banners']);
+    $routes->get('banners/delete/(:num)', '\Webly\Core\Controllers\Admin\BannersController::delete/$1', ['filter' => 'permission:admin.banners']);
+
     $routes->get('pages', '\Webly\Core\Controllers\Admin\PagesController::index', ['filter' => 'permission:admin.pages']);
     $routes->match(['get', 'post'], 'pages/create', '\Webly\Core\Controllers\Admin\PagesController::create', ['filter' => 'permission:admin.pages']);
     $routes->match(['get', 'post'], 'pages/update/(:num)', '\Webly\Core\Controllers\Admin\PagesController::update/$1', ['filter' => 'permission:admin.pages']);
@@ -72,7 +78,7 @@ if(!empty($query->getResult())) {
         }
     }
 
-    foreach($menus as $menu) {
+    foreach($menus as $menu) {        
         $menuItems = json_decode($menu->menu_items);
         foreach($menuItems as $item) {
             $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);

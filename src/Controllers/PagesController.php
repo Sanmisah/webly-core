@@ -16,23 +16,38 @@ class PagesController extends BaseController
 
         $layout = service('settings')->get('App.template') . 'layouts/' . $page->layout;
 
-        /*
-            <meta name="description" content="Page description. No longer than 155 characters." />
+        $url =  site_url($this->request->getUri()->getPath());
 
+        $meta = "
+            <meta name='description' content='{$layout}' />
+            <link rel='canonical' href='{$url}' />
             <!-- Twitter Card data -->
-            <meta name="twitter:card" value="summary">
+            <meta name='twitter:card' value='{$page->meta_description}'>
 
             <!-- Open Graph data -->
-            <meta property="og:title" content="Title Here" />
-            <meta property="og:type" content="article" />
-            <meta property="og:url" content="http://www.example.com/" />
-            <meta property="og:image" content="http://example.com/image.jpg" />
-            <meta property="og:description" content="Description Here" />        
-        */
+            <meta property='og:title' content='{$page->page_title}' />
+            <meta property='og:url' content='{$url}' />
+            <meta property='og:description' content='{$page->meta_description}' />            
+        ";
+
+        if(!empty($page->featured_image)) {
+            $image = site_url($page->featured_image);
+            $meta .= "<meta property='og:image' content='{$image}' />";
+        }
+
+        $PageBlocks = new PageBlocks();
+        $pageBlocks = $PageBlocks->where('page_id', $page->id)->findAll();
+        
+        $blocks = [];
+        foreach($pageBlocks as $block) {
+            $blocks[$block->block] = $block->content;
+        }
 
         return view($layout, [
-            'title' => 'Pages', 
+            'title' => $page->page_title, 
+            'meta' => $meta,
             'page' => $page,
+            'blocks' => $blocks
         ]);        
     }
 }

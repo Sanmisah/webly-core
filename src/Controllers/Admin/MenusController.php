@@ -99,7 +99,7 @@ class MenusController extends BaseController
         return view('Webly\Core\Views\Admin\Menus\update', [
             'title' => 'Menus', 
             'menu' => $menu
-        ]);        
+        ]);
     }
 
     public function delete($id)

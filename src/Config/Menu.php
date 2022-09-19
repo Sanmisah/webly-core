@@ -12,12 +12,18 @@ class Menu extends BaseConfig
             'url' => '#',
             'icon' => 'nav-icon fas fa-tachometer-alt',
             'permissions' => ['admin.blocks', 'admin.pages'],
-            'submenu' => [
+            'submenu' => [                
                 'Blocks' => [
                     'menu' => 'Blocks',
                     'url' => '/admin/blocks',
                     'icon' => 'nav-icon fas fa-th',
                     'permissions' => ['admin.blocks']
+                ],
+                'Banners' => [
+                    'menu' => 'Banners',
+                    'url' => '/admin/banners',
+                    'icon' => 'nav-icon fas fa-th',
+                    'permissions' => ['admin.banners']
                 ],
                 'Pages' => [
                     'menu' => 'Pages',

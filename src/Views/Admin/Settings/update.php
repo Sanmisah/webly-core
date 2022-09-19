@@ -17,37 +17,43 @@
                 <?= csrf_field() ?>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-three-tabContent">
-                        <div class="tab-pane fade show active" id="website" role="tabpanel" aria-labelledby="website-tab">
-                            <?php 
-                                echo input('website_title', [                                
-                                    'input' => [
-                                        'value'=> service('settings')->get('App.website_title'), 
-                                    ]
-                                ]); 
+                        <div class="tab-pane fade show active" id="website" role="tabpanel" aria-labelledby="website-tab">                           
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <?php 
+                                        echo input('website_title', [                                
+                                            'input' => [
+                                                'value'=> service('settings')->get('App.website_title'), 
+                                            ]
+                                        ]); 
+                                    ?>
+                                    <?php
+                                        echo input('global_tags', [
+                                            'input' => [
+                                                'rows'=>5,
+                                                'value'=> service('settings')->get('App.global_tags'), 
+                                                'html_escape' => false
+                                            ]
+                                        ], 
+                                        'textarea');
+                                    ?>
+                                </div>
+                                <div class="col-lg-3">
+                                    <?php
+                                        echo input('template', [                                
+                                            'input' => [
+                                                'value'=> service('settings')->get('App.template'), 
+                                                'options' => service('webly')->getTemplates()
+                                            ]
+                                        ], 'select');                                 
 
-                                echo input('template', [                                
-                                    'input' => [
-                                        'value'=> service('settings')->get('App.template'), 
-                                        'options' => service('webly')->getTemplates()
-                                    ]
-                                ], 'select');                                 
-
-                                echo input('logo', ['help' => template_info('image-size.logo')], 'file');
-                            ?>
-                                <?php if(service('settings')->get('App.logo')) : ?>
-                                    <?= img(service('settings')->get('App.logo'), false, ['class'=>'img-fluid']) ?>
-                                <?php endif; ?>   
-                            <?php
-
-                                echo input('global_tags', [
-                                    'input' => [
-                                        'rows'=>5,
-                                        'value'=> service('settings')->get('App.global_tags'), 
-                                        'html_escape' => false
-                                    ]
-                                ], 
-                                'textarea');
-                            ?>
+                                        echo input('logo', ['help' => "Recommended logo size is " . template_info('image-size.logo') . "px"], 'file');
+                                    ?>
+                                    <?php if(service('settings')->get('App.logo')) : ?>
+                                        <?= img(service('settings')->get('App.logo'), false, ['class'=>'img-fluid']) ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
                             <div class="row">

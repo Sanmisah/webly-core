@@ -129,7 +129,7 @@
                     <h3 class="card-title">Upload Image</h3>
                 </div>
                 <div class="card-body">                
-                    <?= input('featured_image', [], 'file') ?>
+                    <?= input('featured_image', ['help' => "Recommended featured image size is " . template_info('image-size.banner') . "px"], 'file') ?>
                     <?php if($page->featured_image) : ?>
                         <?= img($page->featured_image, false, ['class'=>'img-fluid']) ?>
                         <div class="form-group">

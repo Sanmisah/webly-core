@@ -17,6 +17,5 @@
     </tr>
     </tbody>
 </table>
-<p>This is a really webly email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
 <p>Good luck! Hope it works.</p>
 <?= $this->endSection() ?>
