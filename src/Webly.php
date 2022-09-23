@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Webly\Core;
 
-use Webly\Core\Models\Menus;
-
 class Webly
 {
     public function getTemplates()
@@ -39,7 +37,26 @@ class Webly
 
     public function getMenu($menu)
     {
-        $Menus = new Menus();
+        $Menus = new \Webly\Core\Models\Menus();
         return json_decode($Menus->where('menu', $menu)->first()->menu_items);
+    }
+
+    public function getBanners()
+    {
+        $Banners = new \Webly\Core\Models\Banners();
+        return $Banners->orderBy('sort_order', 'asc')->findAll();
+    }
+
+    public function getBlogCategories()
+    {
+        $BlogCategories = new \Webly\Core\Models\BlogCategories();
+        $blogCategories = $BlogCategories->orderBy('category', 'asc')->findAll();
+
+        $categories = [];
+        foreach($blogCategories as $category) {
+            $categories[$category->id] = $category->category;
+        }
+
+        return $categories;
     }
 }

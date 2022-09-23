@@ -11,7 +11,7 @@ class Menu extends BaseConfig
             'menu' => 'Content',
             'url' => '#',
             'icon' => 'nav-icon fas fa-tachometer-alt',
-            'permissions' => ['admin.blocks', 'admin.pages'],
+            'permissions' => ['admin.blocks', 'admin.pages', 'admin.banners', 'admin.menus'],
             'submenu' => [                
                 'Blocks' => [
                     'menu' => 'Blocks',
@@ -39,6 +39,26 @@ class Menu extends BaseConfig
                 ]                                
             ]
         ],
+        'item2' => [
+            'menu' => 'Blog',
+            'url' => '#',
+            'icon' => 'nav-icon fas fa-tachometer-alt',
+            'permissions' => ['admin.blogs'],
+            'submenu' => [                
+                'Categories' => [
+                    'menu' => 'Category',
+                    'url' => '/admin/blog-categories',
+                    'icon' => 'nav-icon fas fa-th',
+                    'permissions' => ['admin.blogs']
+                ],
+                'Banners' => [
+                    'menu' => 'Posts',
+                    'url' => '/admin/blog-posts',
+                    'icon' => 'nav-icon fas fa-th',
+                    'permissions' => ['admin.blogs']
+                ],
+            ]
+        ],        
         'item95' => [
             'menu' => 'Settings',
             'url' => '/admin/settings',

@@ -42,6 +42,19 @@ $routes->group('admin', function ($routes) {
     $routes->match(['get', 'post'], 'menus/update/(:num)', '\Webly\Core\Controllers\Admin\MenusController::update/$1', ['filter' => 'permission:admin.menus']);
     $routes->get('menus/delete/(:num)', '\Webly\Core\Controllers\Admin\MenusController::delete/$1', ['filter' => 'permission:admin.menus']);
 
+
+    $routes->get('blog-categories', '\Webly\Core\Controllers\Admin\BlogCategoriesController::index', ['filter' => 'permission:admin.blogs']);
+    $routes->match(['get', 'post'], 'blog-categories/create', '\Webly\Core\Controllers\Admin\BlogCategoriesController::create', ['filter' => 'permission:admin.blogs']);
+    $routes->match(['get', 'post'], 'blog-categories/update/(:num)', '\Webly\Core\Controllers\Admin\BlogCategoriesController::update/$1', ['filter' => 'permission:admin.blogs']);
+    $routes->get('blog-categories/delete/(:num)', '\Webly\Core\Controllers\Admin\BlogCategoriesController::delete/$1', ['filter' => 'permission:admin.blogs']);
+
+    $routes->get('blog-posts', '\Webly\Core\Controllers\Admin\BlogPostsController::index', ['filter' => 'permission:admin.blogs']);
+    $routes->post('blog-posts/sort', '\Webly\Core\Controllers\Admin\BlogPostsController::sort', ['filter' => 'permission:admin.blogs']);
+    $routes->match(['get', 'post'], 'blog-posts/create', '\Webly\Core\Controllers\Admin\BlogPostsController::create', ['filter' => 'permission:admin.blogs']);
+    $routes->match(['get', 'post'], 'blog-posts/update/(:num)', '\Webly\Core\Controllers\Admin\BlogPostsController::update/$1', ['filter' => 'permission:admin.blogs']);
+    $routes->get('blog-posts/delete/(:num)', '\Webly\Core\Controllers\Admin\BlogPostsController::delete/$1', ['filter' => 'permission:admin.blogs']);
+
+
     $routes->get('users', '\Webly\Core\Controllers\Admin\UsersController::index', ['filter' => 'permission:admin.users']);
     $routes->match(['get', 'post'], 'users/create', '\Webly\Core\Controllers\Admin\UsersController::create', ['filter' => 'permission:admin.users']);
     $routes->match(['get', 'post'], 'users/update/(:num)', '\Webly\Core\Controllers\Admin\UsersController::update/$1', ['filter' => 'permission:admin.users']);
@@ -53,6 +66,8 @@ $routes->group('admin', function ($routes) {
 
 
 // $routes->get('/', '\Webly\Core\Controllers\PagesController::display/1', ['filter' => 'visits']);
+
+$routes->post('/form', '\Webly\Core\Controllers\PagesController::form/1');
 
 
 $routes->set404Override(static function () {

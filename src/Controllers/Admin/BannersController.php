@@ -13,7 +13,7 @@ class BannersController extends BaseController
 
         return view('Webly\Core\Views\Admin\Banners\index', [
             'title' => 'Banners', 
-            'banners' => $Banners->orderBy('sort_order', 'asc')->paginate(),
+            'banners' => $Banners->orderBy('sort_order', 'asc')->findAll(),
             'pager' => $Banners->pager
         ]);
     }

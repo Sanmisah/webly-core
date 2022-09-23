@@ -50,4 +50,22 @@ class PagesController extends BaseController
             'blocks' => $blocks
         ]);        
     }
+
+    public function form()
+    {
+        if ($this->request->getMethod() === 'post') {
+            $data = $this->request->getPost();
+
+            $inputs = $this->validate([
+                'name' => 'required',
+                'email' => 'required|valid_email',
+            ]);
+
+            if($inputs) {
+                return redirect()->back()->with('success', 'Saved successfully');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Could not be saved');
+            }
+        }
+    }
 }

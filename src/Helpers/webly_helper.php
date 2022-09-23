@@ -27,3 +27,12 @@ if (! function_exists('block'))
 		return $block->description;
 	}
 }
+
+if (! function_exists('validation_error'))
+{
+	function validation_error($field)
+	{
+		$validation =  \Config\Services::validation();
+		return $validation->getError($field);
+	}
+}

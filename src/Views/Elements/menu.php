@@ -8,17 +8,19 @@
             $menus = config('Menu')->menu;
             ksort($menus);
             
-            foreach($menus as $item => $menu) {                
+            foreach($menus as $item => $menu) {         
                 if(isset($menu['submenu']) && $user->can(...$menu['permissions'])) {
                     $active = '';
+                    $menuClass = 'menu-close';
                     foreach($menu['submenu'] as $submenu) {
                         if(strpos(current_url(), $submenu['url'])) {
                             $active = 'active';
+                            $menuClass = 'menu-open';
                             break;
                         }
                     }
                     echo "
-                        <li class='nav-item menu-open'>
+                        <li class='nav-item {$menuClass}'>
                             <a href='#' class='nav-link {$active}'>
                                 <i class='{$menu["icon"]}'></i>
                                 {$menu["menu"]}
