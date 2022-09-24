@@ -19,7 +19,7 @@ class PagesController extends BaseController
         $url =  site_url($this->request->getUri()->getPath());
 
         $meta = "
-            <meta name='description' content='{$layout}' />
+            <meta name='description' content='{$page->meta_description}' />
             <link rel='canonical' href='{$url}' />
             <!-- Twitter Card data -->
             <meta name='twitter:card' value='{$page->meta_description}'>

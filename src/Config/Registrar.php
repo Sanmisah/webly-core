@@ -34,9 +34,11 @@ class Registrar
         foreach($pages as $page) {
             $items['Pages']['\Webly\Core\Controllers\PagesController::display/'.$page->id] = $page->title;
         }
+
+        $items['\Webly\Core\Controllers\BlogController::index'] = 'Blog';
+
         return [
             'items' => $items
-
         ];
     }      
 }

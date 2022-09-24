@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card-body">                
-                        <?= input('banner_image', ['help' => "Recommended banner size is " . template_info('image-size.page_featured_image') . "px"], 'file') ?>
+                        <?= input('banner_image', ['help' => "Recommended banner size is " . template_info('image-size.banner') . "px"], 'file') ?>
                         <?php if($banner->banner_image) : ?>
                         <?= img($banner->banner_image, false, ['class'=>'img-fluid']) ?>
                         <?php endif; ?>   

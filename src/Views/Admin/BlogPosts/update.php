@@ -93,7 +93,7 @@
                             ],
                             'input' => [
                                 'value'=> $blogPost->blog_category_id, 
-                                'options' => service('webly')->getBlogCategories()
+                                'options' => service('webly')->getBlogCategoriesList()
                             ]
                         ],
                         'select');                    
@@ -150,7 +150,7 @@
                 <div class="card-body">               
                     <div class="float-right">
                         <button type="submit" class="btn btn-primary">Save</button>
-                    </div>              
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,7 +160,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('css') ?>
-    <script src="/templates/adminlte3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"></script>
+    <link rel="stylesheet" href="/templates/adminlte3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
@@ -169,5 +169,5 @@
     <script src="/templates/adminlte3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>    
     <script src="/templates/adminlte3/plugins/moment/moment.min.js"></script>
     <script src="/templates/adminlte3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="/templates/adminlte3/dist/js/pages/pages.js"></script>
+    <script src="/templates/adminlte3/dist/js/pages/blog-posts.js"></script>
 <?= $this->endSection() ?>

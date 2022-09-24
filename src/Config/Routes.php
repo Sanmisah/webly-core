@@ -2,6 +2,8 @@
 
 namespace Webly\Core\Config;
 use Webly\Core\Models\Menus;
+use Webly\Core\Models\BlogCategories;
+use Webly\Core\Models\BlogPosts;
 
 // service('auth')->routes($routes);
 
@@ -102,4 +104,24 @@ if(!empty($query->getResult())) {
     }
 }
 
+
+$query = $db->query("SHOW TABLES LIKE 'blog_posts'");
+if(!empty($query->getResult())) {
+    $BlogCategories = new BlogCategories();    
+
+    $categories = $BlogCategories->findAll();
+    foreach($categories as $category) {
+        $slug = "blog/" . url_title($category->category, '-', true);
+        $routes->get($slug, "\Webly\Core\Controllers\BlogController::index/{$category->id}", ['filter' => 'visits']);
+    }
+
+    $BlogPosts = new BlogPosts();
+    $posts = $BlogPosts->findAll();
+
+    foreach($posts as $post) {
+        $category = $BlogCategories->find($post->blog_category_id);
+        $slug = "blog/" . url_title($category->category, '-', true) . "/" . url_title($post->title, '-', true);
+        $routes->get($slug, "\Webly\Core\Controllers\BlogController::display/{$post->id}", ['filter' => 'visits']);
+    }
+}
 

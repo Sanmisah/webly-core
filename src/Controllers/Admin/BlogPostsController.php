@@ -40,6 +40,7 @@ class BlogPostsController extends BaseController
                 ],
                 'page_title' => 'required|max_length[60]|is_unique[blog_posts.page_title, id, {id}]',
                 'meta_description' => 'required|max_length[160]',
+                'blog_category_id' => 'required',
             ]);
 
             if($inputs) {
@@ -81,8 +82,9 @@ class BlogPostsController extends BaseController
                         . '|mime_in[featured_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[featured_image,1024]'
                 ],
-                'page_title' => 'required|max_length[60]|is_unique[blog_posts.page_title, id, {id}]',
+                'page_title' => 'required|max_length[60]|is_unique[blog_posts.page_title, id, {id}]',                
                 'meta_description' => 'required|max_length[160]',
+                'blog_category_id' => 'required',
             ];
 
             $inputs = $this->validate($validate);

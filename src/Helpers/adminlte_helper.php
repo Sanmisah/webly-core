@@ -80,12 +80,13 @@ if (! function_exists('input'))
 			}
 			$str .= '</div>';
 		} elseif($type == 'datepicker') {
-			$str .= "<div class='input-group date' id='reservationdate' data-target-input='nearest'>";
+			$str .= "<div class='input-group date' id='{$extra['input']['id']}_datepicker' data-target-input='nearest'>";
 			$str .= form_input($data, $value, $extra['input'], $type);
-			$str .= "<div class='input-group-append' data-target='#reservationdate' data-toggle='datetimepicker'>";
+			$str .= "<div class='input-group-append' data-target='#{$extra['input']['id']}_datepicker' data-toggle='datetimepicker'>";
 				$str .= "<div class='input-group-text'><i class='fa fa-calendar'></i></div>";
 			$str .= "</div>";
-			$str .= "<span class='form-text'>{$help}</span>";			
+			$str .= "<span class='form-text'>{$help}</span>";	
+			$str .= "</div>";	
 		} else {
 			$str .= form_input($data, $value, $extra['input'], $type);
 			$str .= "<span class='form-text'>{$help}</span>";
@@ -98,6 +99,10 @@ if (! function_exists('input'))
 			$str .= "<span class='error invalid-feedback'>{$error}</span>";
 		}
 		$str .= '</div>';
+
+		// if($type == 'datepicker') {
+		// 	debug($str); exit;
+		// }
         return $str;
 	}
 }

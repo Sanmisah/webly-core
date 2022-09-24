@@ -35,7 +35,7 @@ class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['form', 'html', 'inflector', 'adminlte', 'filesystem', 'webly'];
+    protected $helpers = ['form', 'html', 'text', 'number', 'date', 'inflector', 'adminlte', 'filesystem', 'webly'];
 
     /**
      * Constructor.

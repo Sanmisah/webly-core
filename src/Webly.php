@@ -47,7 +47,7 @@ class Webly
         return $Banners->orderBy('sort_order', 'asc')->findAll();
     }
 
-    public function getBlogCategories()
+    public function getBlogCategoriesList()
     {
         $BlogCategories = new \Webly\Core\Models\BlogCategories();
         $blogCategories = $BlogCategories->orderBy('category', 'asc')->findAll();
@@ -59,4 +59,16 @@ class Webly
 
         return $categories;
     }
+
+    public function getBlogCategories()
+    {
+        $BlogCategories = new \Webly\Core\Models\BlogCategories();
+        $blogCategories = $BlogCategories->orderBy('category', 'asc')->findAll();
+
+        foreach($blogCategories as $i => $category) {
+            $blogCategories[$i]->url = "/blog/" . url_title($category->category, '-', true);
+        }
+
+        return $blogCategories;
+    }    
 }
