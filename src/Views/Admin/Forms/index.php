@@ -4,9 +4,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Blog Posts</h3>
+                <h3 class="card-title">Forms</h3>
                 <div class="card-tools">
-                    <a type="button" class="btn bg-success btn-small" href="blog-posts/create"><i class="fas fa-plus"></i> Create</a>
+                    <a type="button" class="btn bg-success btn-small" href="forms/create"><i class="fas fa-plus"></i> Create</a>
                 </div>
             </div>
             <!-- /.card-header -->
@@ -14,18 +14,19 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th style="width: 40px">&nbsp;</th>
+                            <th>Form</th>
+                            <th style="width: 200px;">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($blogPosts as $post) : ?>
+                        <?php foreach($forms as $form) : ?>
                         <tr>
-                            <td><?= $post->title?></td>
-                            <td>
+                            <td><?= $form->form?></td>
+                            <td class="float-right">
                                 <div class="btn-group">
-                                    <a type="button" class="btn bg-warning btn-sm" href="blog-posts/update/<?= $post->id?>"><i class="fas fa-edit"></i></a>
-                                    <a type="button" class="btn bg-danger btn-sm delete" href="blog-posts/delete/<?= $post->id?>"><i class="far fa-trash-alt"></i></a>
+                                    <a type="button" class="btn bg-info btn-sm" href="forms/data/<?= $form->id?>" target="_blank"><i class="fas fa-list"></i> Data</a>
+                                    <a type="button" class="btn bg-warning btn-sm" href="forms/update/<?= $form->id?>"><i class="fas fa-edit"></i></a>
+                                    <a type="button" class="btn bg-danger btn-sm delete" href="forms/delete/<?= $form->id?>"><i class="far fa-trash-alt"></i></a>
                                 </div>
                             </td>
                         </tr>

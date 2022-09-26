@@ -4,9 +4,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Blog Posts</h3>
+                <h3 class="card-title">Form Data of <?= $form->form ?></h3>
                 <div class="card-tools">
-                    <a type="button" class="btn bg-success btn-small" href="blog-posts/create"><i class="fas fa-plus"></i> Create</a>
+                    <a type="button" class="btn bg-info btn-small" href="/admin/forms/export/<?= $form->id ?>" target="_blank"><i class="fas fa-file-download"></i> Export Data</a>
                 </div>
             </div>
             <!-- /.card-header -->
@@ -14,20 +14,19 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th style="width: 40px">&nbsp;</th>
+                            <th>Submitted On</th>
+                            <?php foreach($form->form_fields as $field):?>
+                                <th><?= humanize($field->field) ?></th>
+                            <?php endforeach; ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($blogPosts as $post) : ?>
+                        <?php foreach($data as $row) : ?>
                         <tr>
-                            <td><?= $post->title?></td>
-                            <td>
-                                <div class="btn-group">
-                                    <a type="button" class="btn bg-warning btn-sm" href="blog-posts/update/<?= $post->id?>"><i class="fas fa-edit"></i></a>
-                                    <a type="button" class="btn bg-danger btn-sm delete" href="blog-posts/delete/<?= $post->id?>"><i class="far fa-trash-alt"></i></a>
-                                </div>
-                            </td>
+                            <td><?= $row->created_at->format('d/m/Y h:i A') ?></td>
+                            <?php foreach($form->form_fields as $field): ?>
+                                <td><?= $row->form_data->{$field->field} ?></td>
+                            <?php endforeach; ?>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

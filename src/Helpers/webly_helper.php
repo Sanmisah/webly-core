@@ -1,13 +1,4 @@
 <?php
-if (! function_exists('setting'))
-{
-	function setting($setting)
-	{
-		return service('settings')->get($setting);
-	}
-}
-
-
 if (! function_exists('template_info'))
 {
 	function template_info($field = null)

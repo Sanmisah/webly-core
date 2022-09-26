@@ -15,8 +15,8 @@
                             ]
                         ]); 
                     ?>
-                    <!-- <input type="hidden" name="menu_items" id="menu_items" value="<?php //$menu->menu_items ?>"> -->
-                    <textarea name="menu_items" id="menu_items" rows=10 cols=100><?= $menu->menu_items ?></textarea>
+                    <input type="hidden" name="menu_items" id="menu_items" value="<?= $menu->menu_items ?>">
+                    <!-- <textarea name="menu_items" id="menu_items" rows=10 cols=100><?php //$menu->menu_items ?></textarea> -->
                     <div class="row">
                         <div class="col-lg-6">
                             <?php 
@@ -30,7 +30,7 @@
                                     ]
                                 ], "select");                            
                             ?> 
-                            <button type="button" id="add-menu" class="btn btn-primary btn-sm">Add Menu</button>                      
+                            <button type="button" id="add-menu" class="btn btn-primary btn-sm">Add Menu</button>
                         </div>
                         <div class="col-lg-6">
                             <?= $this->include('Webly\Core\Views\Admin\Menus\menu') ?>

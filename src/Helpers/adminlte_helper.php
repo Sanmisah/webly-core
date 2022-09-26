@@ -53,7 +53,9 @@ if (! function_exists('input'))
 
 		$str = "<div {$divAttr}>";
 
-		$str .= form_label(empty($extra['label']['label']) ? humanize($data) : $extra['label']['label'] , $data, $extra['label']);
+		if($extra['label'] !== false) {
+			$str .= form_label(empty($extra['label']['label']) ? humanize($data) : $extra['label']['label'] , $data, $extra['label']);
+		}
 
 		if(!isset($extra['input']['id'])) {
 			$extra['input']['id'] = $data;
@@ -95,14 +97,10 @@ if (! function_exists('input'))
 		if(!empty($error) && !in_array($type, ['file'])) {
 			$error = str_replace($data, humanize($data), $error);
 			$error = str_replace('field', '', $error);
-			$str .= "<span class='form-text'>{$help}</span>";
 			$str .= "<span class='error invalid-feedback'>{$error}</span>";
 		}
 		$str .= '</div>';
 
-		// if($type == 'datepicker') {
-		// 	debug($str); exit;
-		// }
         return $str;
 	}
 }

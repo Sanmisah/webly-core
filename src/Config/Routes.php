@@ -4,6 +4,7 @@ namespace Webly\Core\Config;
 use Webly\Core\Models\Menus;
 use Webly\Core\Models\BlogCategories;
 use Webly\Core\Models\BlogPosts;
+use Webly\Core\Models\Forms;
 
 // service('auth')->routes($routes);
 
@@ -44,18 +45,22 @@ $routes->group('admin', function ($routes) {
     $routes->match(['get', 'post'], 'menus/update/(:num)', '\Webly\Core\Controllers\Admin\MenusController::update/$1', ['filter' => 'permission:admin.menus']);
     $routes->get('menus/delete/(:num)', '\Webly\Core\Controllers\Admin\MenusController::delete/$1', ['filter' => 'permission:admin.menus']);
 
-
     $routes->get('blog-categories', '\Webly\Core\Controllers\Admin\BlogCategoriesController::index', ['filter' => 'permission:admin.blogs']);
     $routes->match(['get', 'post'], 'blog-categories/create', '\Webly\Core\Controllers\Admin\BlogCategoriesController::create', ['filter' => 'permission:admin.blogs']);
     $routes->match(['get', 'post'], 'blog-categories/update/(:num)', '\Webly\Core\Controllers\Admin\BlogCategoriesController::update/$1', ['filter' => 'permission:admin.blogs']);
     $routes->get('blog-categories/delete/(:num)', '\Webly\Core\Controllers\Admin\BlogCategoriesController::delete/$1', ['filter' => 'permission:admin.blogs']);
 
     $routes->get('blog-posts', '\Webly\Core\Controllers\Admin\BlogPostsController::index', ['filter' => 'permission:admin.blogs']);
-    $routes->post('blog-posts/sort', '\Webly\Core\Controllers\Admin\BlogPostsController::sort', ['filter' => 'permission:admin.blogs']);
     $routes->match(['get', 'post'], 'blog-posts/create', '\Webly\Core\Controllers\Admin\BlogPostsController::create', ['filter' => 'permission:admin.blogs']);
     $routes->match(['get', 'post'], 'blog-posts/update/(:num)', '\Webly\Core\Controllers\Admin\BlogPostsController::update/$1', ['filter' => 'permission:admin.blogs']);
     $routes->get('blog-posts/delete/(:num)', '\Webly\Core\Controllers\Admin\BlogPostsController::delete/$1', ['filter' => 'permission:admin.blogs']);
 
+    $routes->get('forms', '\Webly\Core\Controllers\Admin\FormsController::index', ['filter' => 'permission:admin.forms']);
+    $routes->match(['get', 'post'], 'forms/create', '\Webly\Core\Controllers\Admin\FormsController::create', ['filter' => 'permission:admin.forms']);
+    $routes->match(['get', 'post'], 'forms/update/(:num)', '\Webly\Core\Controllers\Admin\FormsController::update/$1', ['filter' => 'permission:admin.forms']);
+    $routes->get('forms/data/(:num)', '\Webly\Core\Controllers\Admin\FormsController::showData/$1', ['filter' => 'permission:admin.forms']);
+    $routes->get('forms/export/(:num)', '\Webly\Core\Controllers\Admin\FormsController::exportData/$1', ['filter' => 'permission:admin.forms']);
+    $routes->get('forms/delete/(:num)', '\Webly\Core\Controllers\Admin\FormsController::delete/$1', ['filter' => 'permission:admin.forms']);
 
     $routes->get('users', '\Webly\Core\Controllers\Admin\UsersController::index', ['filter' => 'permission:admin.users']);
     $routes->match(['get', 'post'], 'users/create', '\Webly\Core\Controllers\Admin\UsersController::create', ['filter' => 'permission:admin.users']);
@@ -68,9 +73,6 @@ $routes->group('admin', function ($routes) {
 
 
 // $routes->get('/', '\Webly\Core\Controllers\PagesController::display/1', ['filter' => 'visits']);
-
-$routes->post('/form', '\Webly\Core\Controllers\PagesController::form/1');
-
 
 $routes->set404Override(static function () {
     echo view($layout = service('settings')->get('App.template') . 'layouts/404');
@@ -122,6 +124,16 @@ if(!empty($query->getResult())) {
         $category = $BlogCategories->find($post->blog_category_id);
         $slug = "blog/" . url_title($category->category, '-', true) . "/" . url_title($post->title, '-', true);
         $routes->get($slug, "\Webly\Core\Controllers\BlogController::display/{$post->id}", ['filter' => 'visits']);
+    }
+}
+
+$query = $db->query("SHOW TABLES LIKE 'forms'");
+if(!empty($query->getResult())) {
+    $Forms = new Forms();    
+
+    $forms = $Forms->findAll();
+    foreach($forms as $form) {
+        $routes->post("form/{$form->form}", "\Webly\Core\Controllers\FormsController::form/{$form->form}", ['filter' => 'visits']);
     }
 }
 

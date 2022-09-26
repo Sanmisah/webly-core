@@ -11,19 +11,19 @@ class BlogPostsController extends BaseController
 {
     public function index()
     {
-        $blogPosts = new BlogPosts();
+        $BlogPosts = new BlogPosts();
 
         return view('Webly\Core\Views\Admin\BlogPosts\index', [
             'title' => 'BlogPosts', 
-            'blogPosts' => $blogPosts->paginate(),
-            'pager' => $blogPosts->pager
+            'blogPosts' => $BlogPosts->paginate(),
+            'pager' => $BlogPosts->pager
         ]);
     }
 
     public function create()
     {
-        $blogPosts = new BlogPosts();
-        $blogPost = $blogPosts->newEntity();
+        $BlogPosts = new BlogPosts();
+        $blogPost = $BlogPosts->newEntity();
         $blogPost->visible = true;
 
         if ($this->request->getMethod() === 'post') {
@@ -50,7 +50,7 @@ class BlogPostsController extends BaseController
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
                     $blogPost->featured_image = 'writable/uploads/' . $featuredImage->store();
                 }
-                $blogPosts->save($blogPost);
+                $BlogPosts->save($blogPost);
 
                 return redirect()->to('/admin/blog-posts')->with('success', 'Saved successfully');
             } else {
@@ -67,8 +67,8 @@ class BlogPostsController extends BaseController
 
     public function update($id)
     {
-        $blogPosts = new BlogPosts();
-        $blogPost = $blogPosts->find($id);
+        $BlogPosts = new BlogPosts();
+        $blogPost = $BlogPosts->find($id);
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
@@ -100,7 +100,7 @@ class BlogPostsController extends BaseController
                 if(!empty($data['remove_featured_image']) && $data['remove_featured_image'] == 1) {
                     $blogPost->featured_image = null;
                 }
-                $blogPosts->save($blogPost);
+                $BlogPosts->save($blogPost);
 
                 return redirect()->to('/admin/blog-posts')->with('success', 'Saved successfully');
             } else {
@@ -117,8 +117,8 @@ class BlogPostsController extends BaseController
 
     public function delete($id)
     {
-        $blogPosts = new BlogPosts();
-        $blogPosts->delete($id);
+        $BlogPosts = new BlogPosts();
+        $BlogPosts->delete($id);
         return redirect()->to('/admin/blog-posts')->with('success', 'Successfully Deleted');
     }
 }
