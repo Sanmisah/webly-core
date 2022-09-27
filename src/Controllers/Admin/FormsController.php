@@ -123,7 +123,7 @@ class FormsController extends BaseController
             $record = null;
             $record[] = $row->created_at;
             foreach($form->form_fields as $field) {
-                $record[] = $row->form_data->{$field->field};
+                $record[] = $row->form_data->{$field->field} ?? '';
             }
 
             fputcsv($output, $record);

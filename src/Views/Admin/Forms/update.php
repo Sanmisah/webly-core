@@ -17,7 +17,6 @@
                 </ul>
             </div>
             <?= form_open_multipart() ?>
-                <?= csrf_field() ?>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-three-tabContent">
                         <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">                           

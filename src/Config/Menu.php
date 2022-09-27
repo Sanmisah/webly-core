@@ -7,6 +7,12 @@ use CodeIgniter\Config\BaseConfig;
 class Menu extends BaseConfig
 {
     public $menu = [
+        'item0' => [
+            'menu' => 'Dashboard',
+            'url' => '/admin/dashboard',
+            'icon' => 'nav-icon fas fa-tachometer-alt',
+            'permissions' => ['admin.dashboard']
+        ],             
         'item1' => [
             'menu' => 'Pages',
             'url' => '#',

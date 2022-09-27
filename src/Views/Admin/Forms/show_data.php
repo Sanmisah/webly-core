@@ -11,26 +11,28 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Submitted On</th>
-                            <?php foreach($form->form_fields as $field):?>
-                                <th><?= humanize($field->field) ?></th>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Submitted On</th>
+                                <?php foreach($form->form_fields as $field):?>
+                                    <th><?= humanize($field->field) ?></th>
+                                <?php endforeach; ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($data as $row) : ?>
+                            <tr>
+                                <td><?= $row->created_at->format('d/m/Y h:i A') ?></td>
+                                <?php foreach($form->form_fields as $field): ?>
+                                    <td><?= $row->form_data->{$field->field} ?? '' ?></td>
+                                <?php endforeach; ?>
+                            </tr>
                             <?php endforeach; ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($data as $row) : ?>
-                        <tr>
-                            <td><?= $row->created_at->format('d/m/Y h:i A') ?></td>
-                            <?php foreach($form->form_fields as $field): ?>
-                                <td><?= $row->form_data->{$field->field} ?></td>
-                            <?php endforeach; ?>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
