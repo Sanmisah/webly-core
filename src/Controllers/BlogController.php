@@ -17,6 +17,7 @@ class BlogController extends BaseController
 
         if(!empty($category_id)) {
             $posts = $BlogPosts->where('blog_category_id', $category_id)->paginate();
+            $currentCategory = $BlogCategories->find($category_id);
         } else {
             $posts = $BlogPosts->paginate();
         }
@@ -25,8 +26,9 @@ class BlogController extends BaseController
             $category = $BlogCategories->find($post->blog_category_id);
             $posts[$i]->category = "";
             if($category) {
-                $posts[$i]->category = $category->category;
                 $posts[$i]->url = "/blog/" . url_title($category->category, '-', true) . "/" . url_title($post->title, '-', true);
+                $posts[$i]->category = $category->category;
+                $posts[$i]->category_url = "/blog/" . url_title($category->category, '-', true);
             }
         }
 
@@ -50,7 +52,8 @@ class BlogController extends BaseController
             'title' => 'Blog', 
             'meta' => $meta,
             'posts' => $posts,
-            'pager' => $BlogPosts->pager
+            'pager' => $BlogPosts->pager,
+            'category' => isset($currentCategory) ? $currentCategory : null
         ]); 
     }
 
@@ -62,7 +65,7 @@ class BlogController extends BaseController
         $BlogCategories = new BlogCategories();
         $category = $BlogCategories->find($post->blog_category_id);
         $post->category = $category->category;
-
+        $post->category_url = "/blog/" . url_title($category->category, '-', true);
 
         $layout = service('settings')->get('App.template') . 'layouts/' . $post->layout;
 

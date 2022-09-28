@@ -75,7 +75,7 @@ $routes->group('admin', function ($routes) {
 // $routes->get('/', '\Webly\Core\Controllers\PagesController::display/1', ['filter' => 'visits']);
 
 $routes->set404Override(static function () {
-    echo view($layout = service('settings')->get('App.template') . 'layouts/404');
+    echo view($layout = service('settings')->get('App.template') . 'errors/error_404');
 });
 
 $db = \Config\Database::connect();
@@ -89,7 +89,9 @@ if(!empty($query->getResult())) {
     function getChildren($items, &$routes) {
         if(!empty($items)) {
             foreach($items as $item) {        
-                $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                if($item->slug != "#") {
+                    $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                }
                 getChildren($item->children, $routes);
             }
         } else {
@@ -100,7 +102,9 @@ if(!empty($query->getResult())) {
     foreach($menus as $menu) {        
         $menuItems = json_decode($menu->menu_items);
         foreach($menuItems as $item) {
-            $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+            if($item->slug != "#") {
+                $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+            }
             getChildren($item->children, $routes);
         }
     }

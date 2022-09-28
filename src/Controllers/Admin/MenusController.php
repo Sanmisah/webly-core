@@ -76,11 +76,14 @@ class MenusController extends BaseController
             if($inputs) {
                 $menu->fill($data);                
                 $menuItems = json_decode($menu->menu_items);
+
                 foreach($menuItems as $i=>$item) {
-                    if($item->route != "\\Webly\\Core\\Controllers\\PagesController::display/1") {
-                        $menuItems[$i]->slug = url_title($menuItems[$i]->value, '-', true);
+                    if($item->route == "\\Webly\\Core\\Controllers\\PagesController::display/1") {
+                        $menuItems[$i]->slug = '/';                        
+                    } elseif($item->route == '#') {
+                        $menuItems[$i]->slug = "#";
                     } else {
-                        $menuItems[$i]->slug = '/';
+                        $menuItems[$i]->slug = url_title($menuItems[$i]->value, '-', true);
                     }
                     $this->getChildren($menuItems[$i]);
                 }
