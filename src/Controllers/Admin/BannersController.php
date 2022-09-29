@@ -44,7 +44,7 @@ class BannersController extends BaseController
             $inputs = $this->validate([
                 'banner_image' => [
                     'label' => 'Banner Image',
-                    'rules' => 'is_image[banner_image]'
+                    'rules' => 'uploaded[banner_image]|is_image[banner_image]'
                         . '|mime_in[banner_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[banner_image,512]'
                 ],                
@@ -95,6 +95,7 @@ class BannersController extends BaseController
 
                 $bannerImage = $this->request->getFile('banner_image');
                 if ($bannerImage->isValid() && !$bannerImage->hasMoved()) {
+                    debug("sdf");
                     $banner->banner_image = 'writable/uploads/' . $bannerImage->store();
                 }                
 

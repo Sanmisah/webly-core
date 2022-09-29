@@ -70,5 +70,23 @@ class Webly
         }
 
         return $blogCategories;
+    }
+    
+    public function getGalleryCategoriesList($empty = false)
+    {
+        $GalleryCategories = new \Webly\Core\Models\GalleryCategories();
+        $galleryCategories = $GalleryCategories->orderBy('sort_order', 'asc')->findAll();
+
+        $categories = [];
+
+        if($empty) {
+            $categories[''] = '(select)';
+        }
+
+        foreach($galleryCategories as $category) {
+            $categories[$category->id] = $category->category;
+        }
+
+        return $categories;
     }    
 }

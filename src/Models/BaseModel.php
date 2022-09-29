@@ -40,5 +40,18 @@ class BaseModel extends Model
     public function newEntity($data = null) 
     {        
         return new $this->returnType();
-    }   
+    }
+
+    public function save($data): bool
+    {
+        if(gettype($data) == 'array') {
+            return parent::save($data);
+        }
+
+        if($data->hasChanged()) {
+            return parent::save($data);
+        }
+
+        return true;
+    }    
 }

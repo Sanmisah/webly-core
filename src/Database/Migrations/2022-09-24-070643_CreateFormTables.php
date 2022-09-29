@@ -21,6 +21,7 @@ class CreateFormTables extends Migration
             'updated_at'                => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
+        $this->forge->addUniqueKey(['form']);
         $this->forge->createTable('forms', true);        
 
         $this->forge->addField([

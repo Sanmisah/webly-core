@@ -18,6 +18,7 @@ class CreatePageBlocksTable extends Migration
             'updated_at'        => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
+        $this->forge->addUniqueKey(['block']);
         $this->forge->createTable('page_blocks', true);        
     }
 

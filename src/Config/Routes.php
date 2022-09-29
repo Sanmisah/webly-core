@@ -55,6 +55,18 @@ $routes->group('admin', function ($routes) {
     $routes->match(['get', 'post'], 'blog-posts/update/(:num)', '\Webly\Core\Controllers\Admin\BlogPostsController::update/$1', ['filter' => 'permission:admin.blogs']);
     $routes->get('blog-posts/delete/(:num)', '\Webly\Core\Controllers\Admin\BlogPostsController::delete/$1', ['filter' => 'permission:admin.blogs']);
 
+    $routes->get('gallery-categories', '\Webly\Core\Controllers\Admin\GalleryCategoriesController::index', ['filter' => 'permission:admin.gallery']);
+    $routes->post('gallery-categories/sort', '\Webly\Core\Controllers\Admin\GalleryCategoriesController::sort', ['filter' => 'permission:admin.gallery']);
+    $routes->match(['get', 'post'], 'gallery-categories/create', '\Webly\Core\Controllers\Admin\GalleryCategoriesController::create', ['filter' => 'permission:admin.gallery']);
+    $routes->match(['get', 'post'], 'gallery-categories/update/(:num)', '\Webly\Core\Controllers\Admin\GalleryCategoriesController::update/$1', ['filter' => 'permission:admin.gallery']);
+    $routes->get('gallery-categories/delete/(:num)', '\Webly\Core\Controllers\Admin\GalleryCategoriesController::delete/$1', ['filter' => 'permission:admin.gallery']);
+
+    $routes->get('albums', '\Webly\Core\Controllers\Admin\AlbumsController::index', ['filter' => 'permission:admin.gallery']);
+    $routes->post('albums/sort', '\Webly\Core\Controllers\Admin\AlbumsController::sort', ['filter' => 'permission:admin.gallery']);
+    $routes->match(['get', 'post'], 'albums/create', '\Webly\Core\Controllers\Admin\AlbumsController::create', ['filter' => 'permission:admin.gallery']);
+    $routes->match(['get', 'post'], 'albums/update/(:num)', '\Webly\Core\Controllers\Admin\AlbumsController::update/$1', ['filter' => 'permission:admin.gallery']);
+    $routes->get('albums/delete/(:num)', '\Webly\Core\Controllers\Admin\AlbumsController::delete/$1', ['filter' => 'permission:admin.gallery']);    
+
     $routes->get('forms', '\Webly\Core\Controllers\Admin\FormsController::index', ['filter' => 'permission:admin.forms']);
     $routes->match(['get', 'post'], 'forms/create', '\Webly\Core\Controllers\Admin\FormsController::create', ['filter' => 'permission:admin.forms']);
     $routes->match(['get', 'post'], 'forms/update/(:num)', '\Webly\Core\Controllers\Admin\FormsController::update/$1', ['filter' => 'permission:admin.forms']);
@@ -70,13 +82,6 @@ $routes->group('admin', function ($routes) {
     $routes->get('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);
     $routes->post('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);  
 });   
-
-
-// $routes->get('/', '\Webly\Core\Controllers\PagesController::display/1', ['filter' => 'visits']);
-
-$routes->set404Override(static function () {
-    echo view($layout = service('settings')->get('App.template') . 'errors/error_404');
-});
 
 $db = \Config\Database::connect();
 $query = $db->query("SHOW TABLES LIKE 'menus'");
@@ -141,3 +146,6 @@ if(!empty($query->getResult())) {
     }
 }
 
+$routes->set404Override(static function () {
+    echo view($layout = service('settings')->get('App.template') . 'errors/error_404');
+});

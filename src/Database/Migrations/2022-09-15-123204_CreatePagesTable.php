@@ -22,6 +22,7 @@ class CreatePagesTable extends Migration
             'updated_at'        => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
+        $this->forge->addUniqueKey(['title', 'page_title']);
         $this->forge->createTable('pages', true);        
     }
 

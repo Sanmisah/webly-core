@@ -19,7 +19,6 @@ class CreateBanners extends Migration
             'updated_at'    => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('banners');
         $this->forge->createTable('banners', true);        
     }
 

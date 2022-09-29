@@ -66,6 +66,26 @@ class Menu extends BaseConfig
             ]
         ],
         'item3' => [
+            'menu' => 'Gallery',
+            'url' => '#',
+            'icon' => 'nav-icon fa fa-images',
+            'permissions' => ['admin.gallery'],
+            'submenu' => [                
+                'Categories' => [
+                    'menu' => 'Category',
+                    'url' => '/admin/gallery-categories',
+                    'icon' => 'nav-icon fas fa-th-list',
+                    'permissions' => ['admin.gallery']
+                ],
+                'Albums' => [
+                    'menu' => 'Albums',
+                    'url' => '/admin/albums',
+                    'icon' => 'nav-icon fas fa-images',
+                    'permissions' => ['admin.blogs']
+                ],
+            ]
+        ],        
+        'item4' => [
             'menu' => 'Forms',
             'url' => '/admin/forms',
             'icon' => 'nav-icon fas fa-id-card',
