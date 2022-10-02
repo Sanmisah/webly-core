@@ -63,9 +63,12 @@ $routes->group('admin', function ($routes) {
 
     $routes->get('albums', '\Webly\Core\Controllers\Admin\AlbumsController::index', ['filter' => 'permission:admin.gallery']);
     $routes->post('albums/sort', '\Webly\Core\Controllers\Admin\AlbumsController::sort', ['filter' => 'permission:admin.gallery']);
+    $routes->post('albums/image_sort', '\Webly\Core\Controllers\Admin\AlbumsController::image_sort', ['filter' => 'permission:admin.gallery']);
     $routes->match(['get', 'post'], 'albums/create', '\Webly\Core\Controllers\Admin\AlbumsController::create', ['filter' => 'permission:admin.gallery']);
     $routes->match(['get', 'post'], 'albums/update/(:num)', '\Webly\Core\Controllers\Admin\AlbumsController::update/$1', ['filter' => 'permission:admin.gallery']);
+    $routes->post('albums/upload', '\Webly\Core\Controllers\Admin\AlbumsController::upload', ['filter' => 'permission:admin.gallery']);
     $routes->get('albums/delete/(:num)', '\Webly\Core\Controllers\Admin\AlbumsController::delete/$1', ['filter' => 'permission:admin.gallery']);    
+    $routes->get('albums/delete_image/(:num)/(:num)', '\Webly\Core\Controllers\Admin\AlbumsController::delete_image/$1/$2', ['filter' => 'permission:admin.gallery']);    
 
     $routes->get('forms', '\Webly\Core\Controllers\Admin\FormsController::index', ['filter' => 'permission:admin.forms']);
     $routes->match(['get', 'post'], 'forms/create', '\Webly\Core\Controllers\Admin\FormsController::create', ['filter' => 'permission:admin.forms']);

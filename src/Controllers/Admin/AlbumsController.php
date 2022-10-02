@@ -4,9 +4,13 @@ namespace Webly\Core\Controllers\Admin;
 
 use Webly\Core\Controllers\BaseController;
 use Webly\Core\Models\Albums;
+use Webly\Core\Models\AlbumImages;
+use CodeIgniter\API\ResponseTrait;
 
 class AlbumsController extends BaseController
 {
+    use ResponseTrait;
+
     public function index()
     {
         $Albums = new Albums();
@@ -16,7 +20,7 @@ class AlbumsController extends BaseController
 
         $albums = $builder
             ->select(['albums.*', 'gallery_categories.category'])
-            ->join('gallery_categories', 'albums.gallery_category_id = gallery_categories.id', 'inner')
+            ->join('gallery_categories', 'albums.gallery_category_id = gallery_categories.id', 'left')
             ->orderBy('albums.sort_order', 'asc')
             ->get()
             ->getResult();
@@ -41,7 +45,22 @@ class AlbumsController extends BaseController
                 $Albums->update((int)$id, $data);
             }
         }  
-    }         
+    } 
+    
+    public function image_sort()
+    {
+        $AlbumImages = new AlbumImages();
+
+        if ($this->request->getMethod() === 'post') {
+            $data = $this->request->getPost();
+            foreach($data['sorted'] as $sorOrder => $id) {
+                $data = [
+                    'sort_order' => $sorOrder
+                ];
+                $AlbumImages->update((int)$id, $data);
+            }
+        }  
+    }      
 
     public function create()
     {
@@ -89,6 +108,9 @@ class AlbumsController extends BaseController
         $Albums = new Albums();
         $album = $Albums->find($id);
 
+        $AlbumImages = new AlbumImages();
+        $images = $AlbumImages->where('album_id', $id)->find();
+
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
 
@@ -112,6 +134,10 @@ class AlbumsController extends BaseController
 
                 $Albums->save($album);
 
+                foreach($data['images'] as $image) {
+                    $AlbumImages->save($image);                    
+                }
+
                 return redirect()->to('/admin/albums')->with('success', 'Saved successfully');
             } else {
                 return redirect()->to('/admin/albums/update/'.$id)->withInput()->with('error', 'Could not be saved');
@@ -121,8 +147,47 @@ class AlbumsController extends BaseController
 
         return view('Webly\Core\Views\Admin\Albums\update', [
             'title' => 'Albums', 
-            'album' => $album
+            'album' => $album,
+            'images' => $images
         ]);        
+    }
+
+    public function upload()
+    {
+        if ($this->request->getMethod() === 'post') {
+            $data = $this->request->getPost();
+
+            $inputs = $this->validate([
+                'album_id' => 'required',               
+                'file' => [
+                    'label' => 'Image',
+                    'rules' => 'uploaded[file]|is_image[file]'
+                        . '|mime_in[file,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+                        . '|max_size[file,512]'
+                ],                
+            ]);
+
+            if($inputs) {
+                $AlbumImages = new AlbumImages();
+                $image = $AlbumImages->newEntity();
+
+                $file = $this->request->getFile('file');
+                if ($file->isValid() && !$file->hasMoved()) {
+                    $image->image = 'writable/uploads/' . $file->store();
+                }
+
+                $image->album_id = $data['album_id'];
+                $AlbumImages->save($image);
+
+                $message = 'Uploaded Successfully!'; 
+                return $this->respond($message, 200);
+            } else {
+                $validation = \Config\Services::validation();
+                $message = $validation->getError('file'); 
+                return $this->respond($message, 400);
+            }
+            
+        }
     }
 
     public function delete($id)
@@ -131,4 +196,11 @@ class AlbumsController extends BaseController
         $Albums->delete($id);
         return redirect()->to('/admin/albums')->with('success', 'Successfully Deleted');
     }
+
+    public function delete_image($id, $album_id)
+    {
+        $AlbumImages = new AlbumImages();
+        $AlbumImages->delete($id);
+        return redirect()->to("/admin/albums/update/{$album_id}")->with('success', 'Successfully Deleted');
+    }    
 }

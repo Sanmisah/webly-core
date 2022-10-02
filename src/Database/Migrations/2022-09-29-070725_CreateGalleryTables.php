@@ -46,13 +46,13 @@ class CreateGalleryTables extends Migration
             'updated_at'        => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('albumn_images', true);                
+        $this->forge->createTable('album_images', true);                
     }
 
     public function down()
     {
         $this->forge->dropTable('gallery_categories', true);
-        $this->forge->dropTable('ablums', true);
-        $this->forge->dropTable('ablum_images', true);
+        $this->forge->dropTable('albums', true);
+        $this->forge->dropTable('album_images', true);
     }
 }
