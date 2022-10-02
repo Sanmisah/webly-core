@@ -14,7 +14,7 @@ class PagesController extends BaseController
         $Pages = new Pages();
         $page = $Pages->find($id);
 
-        $layout = service('settings')->get('App.template') . 'layouts/' . $page->layout;
+        $layout = service('settings')->get('App.template') . 'pages/' . $page->layout;
 
         $url =  site_url($this->request->getUri()->getPath());
 

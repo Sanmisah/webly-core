@@ -19,13 +19,13 @@ class Webly
         return $templates;
     }
 
-    public function getLayouts()
+    public function getLayouts($folder = 'pages')
     {
-        $path = config('Paths')->viewDirectory . '/' . service('settings')->get('App.template') . 'layouts';
+        $path = config('Paths')->viewDirectory . '/' . service('settings')->get('App.template') . $folder;
         $files = get_filenames($path, false, false, false);
 
         $layouts = [];
-        $exclude = ['404.php', 'blog.php'];
+        $exclude = ['error_404.php', 'blog.php'];
         foreach($files as $file) {
             if(!in_array($file, $exclude)) {
                 $layouts[str_replace('.php', '', $file)] = str_replace('.php', '', $file);

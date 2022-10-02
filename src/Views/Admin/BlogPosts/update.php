@@ -76,7 +76,7 @@
                         echo input('layout', [
                             'input' => [
                                 'value'=> $blogPost->layout, 
-                                'options' => service('webly')->getLayouts()
+                                'options' => service('webly')->getLayouts('blog')
                             ]
                         ],
                         'select');                    

@@ -13,8 +13,6 @@ class AlbumsController extends BaseController
 
     public function index()
     {
-        $Albums = new Albums();
-
         $db = \Config\Database::connect();
         $builder = $db->table('albums');
 

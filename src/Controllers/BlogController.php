@@ -12,16 +12,18 @@ class BlogController extends BaseController
 
     public function index($category_id = null)
     {
-        $BlogCategories = new BlogCategories();
+        $db = \Config\Database::connect();
+        $builder = $db->table('blog_posts');
+
         $BlogPosts = new BlogPosts();
+        $BlogCategories = new BlogCategories();
 
         if(!empty($category_id)) {
-            $posts = $BlogPosts->where('blog_category_id', $category_id)->paginate();
             $currentCategory = $BlogCategories->find($category_id);
-        } else {
-            $posts = $BlogPosts->paginate();
         }
-        
+
+        $posts = $BlogPosts->get($category_id)->paginate();
+
         foreach($posts as $i => $post) {
             $category = $BlogCategories->find($post->blog_category_id);
             $posts[$i]->category = "";
@@ -32,7 +34,7 @@ class BlogController extends BaseController
             }
         }
 
-        $layout = service('settings')->get('App.template') . 'layouts/blog';
+        $layout = service('settings')->get('App.template') . 'blog/blog';
 
         $url =  site_url($this->request->getUri()->getPath());
 
@@ -67,7 +69,7 @@ class BlogController extends BaseController
         $post->category = $category->category;
         $post->category_url = "/blog/" . url_title($category->category, '-', true);
 
-        $layout = service('settings')->get('App.template') . 'layouts/' . $post->layout;
+        $layout = service('settings')->get('App.template') . 'blog/' . $post->layout;
 
         $url =  site_url($this->request->getUri()->getPath());
 
