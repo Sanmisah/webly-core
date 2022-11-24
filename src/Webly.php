@@ -88,5 +88,5 @@ class Webly
         }
 
         return $categories;
-    }    
+    }
 }

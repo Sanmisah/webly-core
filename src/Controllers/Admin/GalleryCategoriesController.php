@@ -14,7 +14,6 @@ class GalleryCategoriesController extends BaseController
         return view('Webly\Core\Views\Admin\GalleryCategories\index', [
             'title' => 'GalleryCategories', 
             'galleryCategories' => $GalleryCategories->orderBy('sort_order', 'asc')->findAll(),
-            'pager' => $GalleryCategories->pager
         ]);
     }
 

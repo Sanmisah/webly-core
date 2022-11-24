@@ -7,6 +7,9 @@ namespace Webly\Core\Config;
 use Webly\Core\Filters\Permission;
 use Webly\Core\Models\Pages;
 
+use Webly\Core\Models\GalleryCategories;
+use Webly\Core\Models\Albums;
+
 class Registrar
 {
     /**
@@ -27,15 +30,36 @@ class Registrar
     
     public static function Content(): array
     {
-        $Pages = new Pages();
-        $pages = $Pages->where('visible', 1)->findAll();
         $items = [];
 
+        // Add Page Links
+        $Pages = new Pages();
+        $pages = $Pages->where('visible', 1)->findAll();
+        
         foreach($pages as $page) {
             $items['Pages']['\Webly\Core\Controllers\PagesController::display/'.$page->id] = $page->title;
         }
 
+        // Add Blog Links
         $items['\Webly\Core\Controllers\BlogController::index'] = 'Blog';
+
+        // Add Gallery Links
+        $items['Gallery']['/gallery'] = 'All Categories';
+
+        $GalleryCategories = new GalleryCategories();
+        $categories = $GalleryCategories->orderBy('sort_order', 'ASC')->findAll();
+
+        foreach($categories as $category) {
+            $items['Gallery']['/gallery/' . url_title($category->category, '-', true)] = $category->category;
+        }
+
+        $Albums = new Albums();
+        $albums = $Albums->orderBy('sort_order', 'ASC')->findAll();
+
+        foreach($albums as $album) {
+            $category = $GalleryCategories->find($album->gallery_category_id);
+            $items['Albums']["/gallery/" . url_title($category->category, '-', true) . "/" . url_title($album->album, '-', true)] = $album->album;
+        }
 
         return [
             'items' => $items

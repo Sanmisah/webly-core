@@ -5,6 +5,8 @@ use Webly\Core\Models\Menus;
 use Webly\Core\Models\BlogCategories;
 use Webly\Core\Models\BlogPosts;
 use Webly\Core\Models\Forms;
+use Webly\Core\Models\GalleryCategories;
+use Webly\Core\Models\Albums;
 
 // service('auth')->routes($routes);
 
@@ -86,6 +88,8 @@ $routes->group('admin', function ($routes) {
     $routes->post('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);  
 });   
 
+
+// Pages Routes
 $db = \Config\Database::connect();
 $query = $db->query("SHOW TABLES LIKE 'menus'");
 
@@ -98,7 +102,9 @@ if(!empty($query->getResult())) {
         if(!empty($items)) {
             foreach($items as $item) {        
                 if($item->slug != "#") {
-                    $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                    if(substr($item->route, 0, 1 ) != "/") {
+                        $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                    }
                 }
                 getChildren($item->children, $routes);
             }
@@ -111,7 +117,9 @@ if(!empty($query->getResult())) {
         $menuItems = json_decode($menu->menu_items);
         foreach($menuItems as $item) {
             if($item->slug != "#") {
-                $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                if(substr($item->route, 0, 1 ) != "/") {
+                    $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                }
             }
             getChildren($item->children, $routes);
         }
@@ -119,6 +127,7 @@ if(!empty($query->getResult())) {
 }
 
 
+// Blog Routes
 $query = $db->query("SHOW TABLES LIKE 'blog_posts'");
 if(!empty($query->getResult())) {
     $BlogCategories = new BlogCategories();    
@@ -139,6 +148,7 @@ if(!empty($query->getResult())) {
     }
 }
 
+// Forms Routes
 $query = $db->query("SHOW TABLES LIKE 'forms'");
 if(!empty($query->getResult())) {
     $Forms = new Forms();    
@@ -146,6 +156,30 @@ if(!empty($query->getResult())) {
     $forms = $Forms->findAll();
     foreach($forms as $form) {
         $routes->post("form/{$form->form}", "\Webly\Core\Controllers\FormsController::form/{$form->form}", ['filter' => 'visits']);
+    }
+}
+
+// Forms Routes
+$query = $db->query("SHOW TABLES LIKE 'gallery_categories'");
+if(!empty($query->getResult())) {
+    $routes->get('gallery', "\Webly\Core\Controllers\GalleryController::categories", ['filter' => 'visits']);
+
+
+    $GalleryCategories = new GalleryCategories();
+    $categories = $GalleryCategories->orderBy('sort_order', 'ASC')->findAll();
+
+    foreach($categories as $category) {
+        $slug = "gallery/" . url_title($category->category, '-', true);
+        $routes->get($slug, "\Webly\Core\Controllers\GalleryController::albums/{$category->id}", ['filter' => 'visits']);
+    }
+
+    $Albums = new Albums();
+    $albums = $Albums->orderBy('sort_order', 'ASC')->findAll();
+
+    foreach($albums as $album) {
+        $category = $GalleryCategories->find($album->gallery_category_id);
+        $slug = "gallery/" . url_title($category->category, '-', true) . "/" . url_title($album->album, '-', true);
+        $routes->get($slug, "\Webly\Core\Controllers\GalleryController::display_albums/{$album->id}", ['filter' => 'visits']);
     }
 }
 

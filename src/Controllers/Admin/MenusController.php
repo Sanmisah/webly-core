@@ -7,6 +7,8 @@ use Webly\Core\Models\Menus;
 
 class MenusController extends BaseController
 {
+    protected $menuItems;
+
     public function index()
     {
         $Menus = new Menus();
@@ -52,7 +54,8 @@ class MenusController extends BaseController
     function getChildren(&$menu) {
         if(!empty($menu->children)) {
             foreach($menu->children as $i => $item) {
-                $menu->children[$i]->slug = $menu->slug . '/' . url_title($item->value, '-', true);     
+                $menu->children[$i]->slug = $menu->slug . '/' . url_title($item->value, '-', true);
+                $this->menuItems[url_title($item->value, '-', true)] = $item->value;
                 $this->getChildren($item);
             }
         } else {
@@ -79,15 +82,19 @@ class MenusController extends BaseController
 
                 foreach($menuItems as $i=>$item) {
                     if($item->route == "\\Webly\\Core\\Controllers\\PagesController::display/1") {
-                        $menuItems[$i]->slug = '/';                        
+                        $menuItems[$i]->slug = '/';
+                        $this->menuItems['/'] = $item->value;
                     } elseif($item->route == '#') {
                         $menuItems[$i]->slug = "#";
                     } else {
                         $menuItems[$i]->slug = url_title($menuItems[$i]->value, '-', true);
+                        $this->menuItems[$menuItems[$i]->slug] = $item->value;
                     }
                     $this->getChildren($menuItems[$i]);
                 }
 
+                // debug($this->menuItems);
+                // debug($menuItems); exit;
                 $menu->menu_items = json_encode($menuItems);
 
                 $Menus->save($menu);

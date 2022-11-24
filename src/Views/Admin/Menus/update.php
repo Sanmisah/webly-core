@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card card-primary card-outline card-tabs">
-            <form method="post">
+            <form method="post" id="frm">
                 <?= csrf_field() ?>
                 <div class="card-body">
                     <?php 

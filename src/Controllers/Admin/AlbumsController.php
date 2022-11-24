@@ -26,7 +26,6 @@ class AlbumsController extends BaseController
         return view('Webly\Core\Views\Admin\Albums\index', [
             'title' => 'Albums', 
             'albums' => $albums,
-            'pager' => $Albums->pager
         ]);
     }
 
@@ -75,7 +74,8 @@ class AlbumsController extends BaseController
                     'rules' => 'uploaded[album_image]|is_image[album_image]'
                         . '|mime_in[album_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[album_image,512]'
-                ],                
+                ],
+                'gallery_category_id' => 'required',
             ]);
 
             if($inputs) {
@@ -119,7 +119,8 @@ class AlbumsController extends BaseController
                     'rules' => 'is_image[album_image]'
                         . '|mime_in[album_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[album_image,512]'
-                ],                
+                ],
+                'gallery_category_id' => 'required',                
             ]);
 
             if($inputs) {
