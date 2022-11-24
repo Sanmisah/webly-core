@@ -39,7 +39,8 @@ class Setup extends BaseCommand
     private function createAdmin(): void
     {
         $name = CLI::prompt('Admin Name', 'Admin', 'required|max_length[100]');
-        $email = CLI::prompt('Admin Email', 'admin@webly.com', 'required|max_length[254]|valid_email|is_unique[auth_identities.secret]');
+        // $email = CLI::prompt('Admin Email', 'admin@webly.com', 'required|max_length[254]|valid_email|is_unique[auth_identities.secret]');
+        $email = CLI::prompt('Admin Email', 'admin@webly.com', 'required|max_length[254]|valid_email');
         $password = CLI::prompt('Admin Password', 'abcd123@', 'required');
 
         $Users = model('Webly\Core\Models\Users');
