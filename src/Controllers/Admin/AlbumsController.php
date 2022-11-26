@@ -83,7 +83,10 @@ class AlbumsController extends BaseController
 
                 $albumImage = $this->request->getFile('album_image');
                 if ($albumImage->isValid() && !$albumImage->hasMoved()) {
-                    $album->album_image = 'writable/uploads/' . $albumImage->store();
+                    $newName = $albumImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $albumImage->move($path, $newName);                    
+                    $album->album_image = $path . $newName;
                 }
 
                 $Albums->save($album);
@@ -128,7 +131,10 @@ class AlbumsController extends BaseController
 
                 $albumImage = $this->request->getFile('album_image');
                 if ($albumImage->isValid() && !$albumImage->hasMoved()) {
-                    $album->album_image = 'writable/uploads/' . $albumImage->store();
+                    $newName = $albumImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $albumImage->move($path, $newName);                    
+                    $album->album_image = $path . $newName;
                 }
 
                 $Albums->save($album);
@@ -172,7 +178,10 @@ class AlbumsController extends BaseController
 
                 $file = $this->request->getFile('file');
                 if ($file->isValid() && !$file->hasMoved()) {
-                    $image->image = 'writable/uploads/' . $file->store();
+                    $newName = $image->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $image->move($path, $newName);                    
+                    $image->image = $path . $newName;
                 }
 
                 $image->album_id = $data['album_id'];

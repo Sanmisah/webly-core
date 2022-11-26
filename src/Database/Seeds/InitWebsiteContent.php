@@ -10,14 +10,14 @@ class InitWebsiteContent extends Seeder
     {
         // Add Banners
         $data = [
-            'banner_image'  => 'writable/uploads/20221124/1669268202_8e6bcba38c6969edc334.png',
+            'banner_image'  => 'uploads/26112022/1669451254_16b099aa87592ff3eb95.png',
             'caption'       => 'Banner 1'
         ];
 
         $this->db->table('banners')->insert($data);
 
         $data = [
-            'banner_image'  => 'writable/uploads/20221124/1669268211_471e25d86ab00769001d.png',
+            'banner_image'  => 'uploads/26112022/1669451254_16b099aa87592ff3eb95.png',
             'caption'       => 'Banner 2'
         ];
 
@@ -59,7 +59,7 @@ class InitWebsiteContent extends Seeder
             'blog_category_id' => 1,
             'author' => 'James Bond',
             'published_on' => '2022-09-21',
-            'featured_image' => 'writable/uploads/20221124/1669269778_32a0505f305e0bd00e2e.png'
+            'featured_image' => 'uploads/26112022/1669451361_a744c5322c50f9754fd4.png'
         ];
 
         $this->db->table('blog_posts')->insert($data);
@@ -89,7 +89,7 @@ class InitWebsiteContent extends Seeder
             'meta_description'  => 'This meta',
             'layout'            => 'home',
             'visible'           => 1,
-            'featured_image'    => 'writable/uploads/20220917/1663419429_4197e48d60b3a59fc5dd.png'
+            'featured_image'    => 'uploads/26112022/1669451426_bfbfe184c1f9eb91377a.png'
         ];
 
         $this->db->table('pages')->insert($data);
@@ -101,7 +101,7 @@ class InitWebsiteContent extends Seeder
             'meta_description'  => 'This is about us',
             'layout'            => 'about',
             'visible'           => 1,
-            'featured_image'    => 'writable/uploads/20220922/1663836179_575ddb169e6faddbe3d3.jpg'
+            'featured_image'    => 'uploads/26112022/1669451436_286cc64a3a996282bde2.png'
         ];
 
         $this->db->table('pages')->insert($data);
@@ -114,7 +114,7 @@ class InitWebsiteContent extends Seeder
             'meta_description'  => 'This is mission page',
             'layout'            => 'about',
             'visible'           => 1,
-            'featured_image'    => 'writable/uploads/20221124/1669269337_2eefc614fc9936acbbb6.png'
+            'featured_image'    => 'uploads/26112022/1669451443_dc9da89149501affc4c7.png'
         ];
 
         $this->db->table('pages')->insert($data);
@@ -126,7 +126,7 @@ class InitWebsiteContent extends Seeder
             'meta_description'  => 'This is Vision',
             'layout'            => 'about',
             'visible'           => 1,
-            'featured_image'    => 'writable/uploads/20221124/1669269344_1e81b0a432782e33b3b0.png'
+            'featured_image'    => 'uploads/26112022/1669451454_09171b86b625ef6f77fc.png'
         ];
 
         $this->db->table('pages')->insert($data);

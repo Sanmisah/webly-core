@@ -55,7 +55,10 @@ class GalleryCategoriesController extends BaseController
                 
                 $galleryCategoryImage = $this->request->getFile('category_image');
                 if ($galleryCategoryImage->isValid() && !$galleryCategoryImage->hasMoved()) {
-                    $galleryCategory->category_image = 'writable/uploads/' . $galleryCategoryImage->store();
+                    $newName = $galleryCategoryImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $galleryCategoryImage->move($path, $newName);                    
+                    $galleryCategory->category_image = $path . $newName;
                 }
 
                 $GalleryCategories->save($galleryCategory);
@@ -96,7 +99,10 @@ class GalleryCategoriesController extends BaseController
 
                 $galleryCategoryImage = $this->request->getFile('category_image');
                 if ($galleryCategoryImage->isValid() && !$galleryCategoryImage->hasMoved()) {
-                    $galleryCategory->category_image = 'writable/uploads/' . $galleryCategoryImage->store();
+                    $newName = $galleryCategoryImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $galleryCategoryImage->move($path, $newName);                    
+                    $galleryCategory->category_image = $path . $newName;
                 }                
 
                 $GalleryCategories->save($galleryCategory);

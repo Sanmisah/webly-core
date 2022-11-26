@@ -55,7 +55,10 @@ class BannersController extends BaseController
                 
                 $bannerImage = $this->request->getFile('banner_image');
                 if ($bannerImage->isValid() && !$bannerImage->hasMoved()) {
-                    $banner->banner_image = 'writable/uploads/' . $bannerImage->store();
+                    $newName = $bannerImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $bannerImage->move($path, $newName);                                                        
+                    $banner->banner_image = $path . $newName;
                 }
 
                 $Banners->save($banner);
@@ -95,8 +98,10 @@ class BannersController extends BaseController
 
                 $bannerImage = $this->request->getFile('banner_image');
                 if ($bannerImage->isValid() && !$bannerImage->hasMoved()) {
-                    debug("sdf");
-                    $banner->banner_image = 'writable/uploads/' . $bannerImage->store();
+                    $newName = $bannerImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $bannerImage->move($path, $newName);                                        
+                    $banner->banner_image = $path . $newName;
                 }                
 
                 $Banners->save($banner);

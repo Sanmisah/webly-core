@@ -27,7 +27,10 @@ class SettingsController extends BaseController
 
                 $logo = $this->request->getFile('logo');
                 if ($logo->isValid() && !$logo->hasMoved()) {
-                    service('settings')->set("App.logo", 'writable/uploads/' . $logo->store());
+                    $newName = $logo->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $logo->move($path, $newName);                    
+                    service('settings')->set("App.logo", $path . $newName);
                 }                
 
                 service('settings')->set("App.global_tags", $this->request->getVar('global_tags'));

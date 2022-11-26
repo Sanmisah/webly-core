@@ -48,7 +48,10 @@ class BlogPostsController extends BaseController
 
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
-                    $blogPost->featured_image = 'writable/uploads/' . $featuredImage->store();
+                    $newName = $featuredImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $featuredImage->move($path, $newName);                    
+                    $blogPost->featured_image = $path . $newName;
                 }
                 $BlogPosts->save($blogPost);
 
@@ -94,7 +97,10 @@ class BlogPostsController extends BaseController
                 
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
-                    $blogPost->featured_image = 'writable/uploads/' . $featuredImage->store();
+                    $newName = $featuredImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $featuredImage->move($path, $newName);                    
+                    $blogPost->featured_image = $path . $newName;
                 }
                 
                 if(!empty($data['remove_featured_image']) && $data['remove_featured_image'] == 1) {

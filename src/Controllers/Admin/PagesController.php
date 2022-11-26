@@ -47,7 +47,9 @@ class PagesController extends BaseController
 
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
-                    $page->featured_image = 'writable/uploads/' . $featuredImage->store();
+                    $newName = $featuredImage->getRandomName();
+                    $featuredImage->move("uploads/", $newName);                    
+                    $page->featured_image = 'uploads/' . $newName;
                 }
                 $Pages->save($page);
 
@@ -104,7 +106,10 @@ class PagesController extends BaseController
                 
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
-                    $page->featured_image = 'writable/uploads/' . $featuredImage->store();
+                    $newName = $featuredImage->getRandomName();
+                    $path = 'uploads/'.date('dmY').'/';
+                    $featuredImage->move($path, $newName);                    
+                    $page->featured_image = $path . $newName;
                 }
                 
                 if(!empty($data['remove_featured_image']) && $data['remove_featured_image'] == 1) {
