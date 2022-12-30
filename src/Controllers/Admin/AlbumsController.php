@@ -139,8 +139,10 @@ class AlbumsController extends BaseController
 
                 $Albums->save($album);
 
-                foreach($data['images'] as $image) {
-                    $AlbumImages->save($image);                    
+                if(!empty($data['images'])) {
+                    foreach($data['images'] as $image) {
+                        $AlbumImages->save($image);                    
+                    }
                 }
 
                 return redirect()->to('/admin/albums')->with('success', 'Saved successfully');
