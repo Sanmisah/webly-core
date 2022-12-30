@@ -178,9 +178,9 @@ class AlbumsController extends BaseController
 
                 $file = $this->request->getFile('file');
                 if ($file->isValid() && !$file->hasMoved()) {
-                    $newName = $image->getRandomName();
+                    $newName = $file->getRandomName();
                     $path = 'uploads/'.date('dmY').'/';
-                    $image->move($path, $newName);                    
+                    $file->move($path, $newName);                    
                     $image->image = $path . $newName;
                 }
 
