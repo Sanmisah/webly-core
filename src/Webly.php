@@ -13,9 +13,10 @@ class Webly
         $templates = [];
         foreach($folders as $folder) {
             if(!in_array($folder, ['adminlte3'.DIRECTORY_SEPARATOR])) {
-                $templates[$folder] = humanize(str_replace(DIRECTORY_SEPARATOR, '', $folder));
+                $templates[rtrim($folder,'/')] = humanize(str_replace(DIRECTORY_SEPARATOR, '', $folder));
             }            
         }
+
         return $templates;
     }
 
