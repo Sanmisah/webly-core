@@ -184,5 +184,5 @@ if(!empty($query->getResult())) {
 }
 
 $routes->set404Override(static function () {
-    echo view($layout = service('settings')->get('App.template') . 'errors/error_404');
+    echo view($layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR . 'error_404');
 });
