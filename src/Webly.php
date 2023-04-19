@@ -22,7 +22,7 @@ class Webly
 
     public function getLayouts($folder = 'pages')
     {
-        $path = config('Paths')->viewDirectory . '/' . service('settings')->get('App.template') . $folder;
+        $path = config('Paths')->viewDirectory . DIRECTORY_SEPARATOR . service('settings')->get('App.template') . $folder;
         $files = get_filenames($path, false, false, false);
 
         $layouts = [];
