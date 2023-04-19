@@ -51,7 +51,7 @@ class SettingsController extends BaseController
 
                 return redirect()->to('/admin/settings')->with('success', 'Settings saved successfully');
             } else {
-                return redirect()->to('/admin/settings')->withInput()->with('error', 'Settings could not be saved');
+                return redirect()->to('/admin/settings')->withInput()->with('error', 'Settings Could not be saved');
             }
         }
 

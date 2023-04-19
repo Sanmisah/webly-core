@@ -36,7 +36,7 @@ class BlogCategoriesController extends BaseController
 
                 return redirect()->to('/admin/blog-categories')->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/blog-categories/create')->withInput()->with('error', 'could not be saved');
+                return redirect()->to('/admin/blog-categories/create')->withInput()->with('error', 'Could not be saved');
             }
                         
         }

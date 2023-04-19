@@ -68,7 +68,7 @@ class FormsController extends BaseController
 
                 return redirect()->to('/admin/forms')->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/forms/update/'.$id)->withInput()->with('error', 'could not be saved');
+                return redirect()->to('/admin/forms/update/'.$id)->withInput()->with('error', 'Could not be saved');
             }       
         }
 

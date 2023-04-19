@@ -132,7 +132,7 @@ class PagesController extends BaseController
 
                 return redirect()->to('/admin/pages')->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/pages/update/'.$id)->withInput()->with('error', 'could not be saved');
+                return redirect()->to('/admin/pages/update/'.$id)->withInput()->with('error', 'Could not be saved');
             }
                         
         }

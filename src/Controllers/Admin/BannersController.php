@@ -65,7 +65,7 @@ class BannersController extends BaseController
 
                 return redirect()->to('/admin/banners')->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/banners/create')->withInput()->with('error', 'could not be saved');
+                return redirect()->to('/admin/banners/create')->withInput()->with('error', 'Could not be saved');
             }
                         
         }

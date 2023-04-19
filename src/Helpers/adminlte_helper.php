@@ -3,8 +3,8 @@ if (! function_exists('input'))
 {
 	function input($data = '', $extra = [], $type = 'text'): string
 	{
-		$validation =  \Config\Services::validation();
-		$error = $validation->getError($data);
+		$error = validation_show_error($data);
+
 		if(!isset( $extra['label'])) {
 			$extra['label'] = [];
 		}

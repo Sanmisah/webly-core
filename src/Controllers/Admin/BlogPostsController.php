@@ -110,7 +110,7 @@ class BlogPostsController extends BaseController
 
                 return redirect()->to('/admin/blog-posts')->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/blog-posts/update/'.$id)->withInput()->with('error', 'could not be saved');
+                return redirect()->to('/admin/blog-posts/update/'.$id)->withInput()->with('error', 'Could not be saved');
             }
                         
         }
