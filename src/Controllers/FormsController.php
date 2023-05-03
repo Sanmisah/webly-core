@@ -20,7 +20,9 @@ class FormsController extends BaseController
 
             $validate = [];
             foreach($formFields as $field) {
-                $validate[$field->field] = $field->validations;
+                if(!empty($field->validations)) {
+                    $validate[$field->field] = $field->validations;
+                }
             }
 
             $inputs = $this->validate($validate);

@@ -12,7 +12,7 @@ class GalleryController extends BaseController
 {
     public function categories()
     {
-        $layout = service('settings')->get('App.template') . 'gallery/categories';
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'gallery' . DIRECTORY_SEPARATOR . 'categories';
 
         $GalleryCategories = new GalleryCategories();
 
@@ -44,7 +44,7 @@ class GalleryController extends BaseController
 
     public function albums($category_id = null)
     {
-        $layout = service('settings')->get('App.template') . 'gallery/albums';
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'gallery' . DIRECTORY_SEPARATOR . 'albums';
 
         $Albums = new Albums();
 
@@ -90,7 +90,7 @@ class GalleryController extends BaseController
 
     public function display_albums($album_id = null)
     {
-        $layout = service('settings')->get('App.template') . 'gallery/images';
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'gallery' . DIRECTORY_SEPARATOR . 'images';
 
         $AlbumImages = new AlbumImages();
 

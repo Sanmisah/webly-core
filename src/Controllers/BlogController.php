@@ -34,7 +34,7 @@ class BlogController extends BaseController
             }
         }
 
-        $layout = service('settings')->get('App.template') . 'blog/blog';
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'blog' . DIRECTORY_SEPARATOR . 'blog';
 
         $url =  site_url($this->request->getUri()->getPath());
 
@@ -69,7 +69,7 @@ class BlogController extends BaseController
         $post->category = $category->category;
         $post->category_url = "/blog/" . url_title($category->category, '-', true);
 
-        $layout = service('settings')->get('App.template') . 'blog/' . $post->layout;
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'blog' . DIRECTORY_SEPARATOR . $post->layout;
 
         $url =  site_url($this->request->getUri()->getPath());
 
