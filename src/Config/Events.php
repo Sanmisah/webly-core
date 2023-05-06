@@ -14,7 +14,11 @@ Events::on('form_submission', static function ($data, $form) {
             <ul>
         ";
         foreach($data as $field => $value) {
-            $body .= "<li>".humanize($field).": {$value}</li>";
+            if(substr($value, 0, 8) === 'uploads/') {
+                $body .= "<li><strong>".humanize($field).":</strong> ". anchor($value, $value, ['target' => '_blank']) . "</li>";
+            } else {
+                $body .= "<li><strong>".humanize($field).":</strong> {$value}</li>";
+            }
         }                    
         $body .= "</ul>";
 

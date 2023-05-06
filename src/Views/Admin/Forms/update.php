@@ -73,6 +73,8 @@
                                         ]); 
                                     ?> 
                                     <button type="button" id="add-field" class="btn btn-primary btn-sm">Add Field</button>
+                                    <hr />
+                                    <?= anchor('https://codeigniter.com/user_guide/libraries/validation.html#available-rules', 'Available Validation Rules', ['target' => '_blank']); ?>
                                 </div>
                                 <div class="col-lg-8">
                                     <table class="table table-sm" id="fields-table">

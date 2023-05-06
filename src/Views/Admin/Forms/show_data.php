@@ -26,7 +26,17 @@
                             <tr>
                                 <td><?= $row->created_at->format('d/m/Y h:i A') ?></td>
                                 <?php foreach($form->form_fields as $field): ?>
-                                    <td><?= $row->form_data->{$field->field} ?? '' ?></td>
+                                    <td>
+                                        <?php
+                                            if(isset($row->form_data->{$field->field})) {
+                                                if(substr($row->form_data->{$field->field}, 0, 8) === 'uploads/') {
+                                                    echo anchor($row->form_data->{$field->field}, $row->form_data->{$field->field}, ['target' => '_blank']);
+                                                } else {
+                                                    echo $row->form_data->{$field->field};
+                                                }
+                                            }
+                                        ?>
+                                    </td>
                                 <?php endforeach; ?>
                             </tr>
                             <?php endforeach; ?>

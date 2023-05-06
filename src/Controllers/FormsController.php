@@ -17,19 +17,38 @@ class FormsController extends BaseController
             $form = $Forms->where('form', $form)->first();
             
             $formFields = $form->form_fields;
-
+            $formFieldsArray = [];
             $validate = [];
             foreach($formFields as $field) {
+                $formFieldsArray[] = $field->field;
                 if(!empty($field->validations)) {
                     $validate[$field->field] = $field->validations;
                 }
             }
 
             $inputs = $this->validate($validate);
-            
+                      
             if($inputs) {
                 $data = $this->request->getPost();
                 unset($data['csrf_test_name']);
+                
+                $uploadFileNames = [];
+                foreach($_FILES as $field => $inputFile) {
+                    if($inputFile['error'] == UPLOAD_ERR_OK && in_array($field, $formFieldsArray)) {
+                        $uploadFileNames[] = $field;
+                    }                     
+                }
+                // dd($uploadFields);
+
+                foreach($uploadFileNames as $fileName) {
+                    $file = $this->request->getFile($fileName);
+                    if ($file->isValid() && !$file->hasMoved()) {
+                        $newName = $file->getRandomName();
+                        $path = 'uploads/'.date('dmY').'/';
+                        $file->move($path, $newName);                                                        
+                        $data[$fileName] = $path . $newName;
+                    }
+                }            
 
                 $FormData = new FormData();
                 $formData = $FormData->newEntity();
