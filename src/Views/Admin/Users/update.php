@@ -26,19 +26,17 @@
                             ],
                         ]); 
                         
-                        $groups = $user->getGroups();
+                        $userGroups = $user->getGroups();
+                        $groups = config('AuthGroups')->groups;
                     ?>
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" name="group[]" id="group-admin" value="admin" <?= in_array('admin', $groups) ? 'checked' : '' ?> >
-                            <label for="group-admin" class="custom-control-label">Admin</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" name="group[]" id="group-editor" value="editor" <?= in_array('editor', $groups) ? 'checked' : '' ?>>
-                            <label for="group-editor" class="custom-control-label">Editor</label>
-                        </div>
-                        <?php $validation =  \Config\Services::validation(); ?>
-                        <span class='error invalid-feedback' style="display:block;"><?= $validation->getError('group'); ?></span>
+                    <?php foreach($groups as $group => $meta) { ?>
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" name="group[]" id="group-<?= $group ?>" value="<?= $group ?>" <?= in_array($group, $userGroups) ? 'checked' : '' ?>>
+                                <label for="group-<?= $group ?>" class="custom-control-label"><?= $meta['title'] ?> : <?= $meta['description'] ?></label>
+                            </div>
+                        <?php } ?>
+                        <span class='error invalid-feedback' style="display:block;"><?= validation_show_error('group') ?></span>
                     </div>
                 </div>
                 <div class="card-footer">

@@ -191,9 +191,8 @@ class AlbumsController extends BaseController
 
                 $message = 'Uploaded Successfully!'; 
                 return $this->respond($message, 200);
-            } else {
-                $validation = \Config\Services::validation();
-                $message = $validation->getError('file'); 
+            } else {                
+                $message = validation_show_error('file'); 
                 return $this->respond($message, 400);
             }
             
