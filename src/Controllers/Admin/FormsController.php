@@ -57,6 +57,7 @@ class FormsController extends BaseController
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
             $inputs = $this->validate([
+                'id'    => 'is_natural_no_zero',
                 'form' => 'required|alpha_dash|max_length[60]|is_unique[forms.form, id, {id}]',
                 'form_fields' => 'required',
                 'email_to' => 'permit_empty|max_length[200]|valid_emails'

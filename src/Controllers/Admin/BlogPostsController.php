@@ -77,6 +77,7 @@ class BlogPostsController extends BaseController
             $data = $this->request->getPost();
 
             $validate = [
+                'id'    => 'is_natural_no_zero',
                 'title' => 'required|max_length[60]|is_unique[blog_posts.title, id, {id}]',
                 'content' => 'required',
                 'featured_image' => [

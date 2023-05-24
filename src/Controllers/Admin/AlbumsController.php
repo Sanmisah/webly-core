@@ -116,6 +116,7 @@ class AlbumsController extends BaseController
             $data = $this->request->getPost();
 
             $inputs = $this->validate([
+                'id'    => 'is_natural_no_zero',                
                 'album' => 'required|max_length[60]|is_unique[albums.album, id, {id}]',               
                 'album_image' => [
                     'label' => 'Album Image',
