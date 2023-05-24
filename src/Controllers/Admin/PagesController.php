@@ -78,6 +78,7 @@ class PagesController extends BaseController
             $data = $this->request->getPost();
 
             $validate = [
+                'id'    => 'is_natural_no_zero',
                 'title' => 'required|max_length[60]|is_unique[pages.title, id, {id}]',
                 'content' => 'required',
                 'featured_image' => [

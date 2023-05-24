@@ -29,6 +29,7 @@ class MenusController extends BaseController
             $data = $this->request->getPost();
 
             $inputs = $this->validate([
+                'id'    => 'is_natural_no_zero',
                 'menu' => 'required|max_length[30]|is_unique[menus.menu]',
                 'menu_items' => 'required',
             ]);
