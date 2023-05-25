@@ -86,8 +86,9 @@ $routes->group('admin', function ($routes) {
 
     $routes->get('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);
     $routes->post('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);  
-});   
+});
 
+$routes->match(['get', 'post'], 'search', "\Webly\Core\Controllers\SearchController::index", ['filter' => 'visits']);
 
 // Pages Routes
 $db = \Config\Database::connect();
