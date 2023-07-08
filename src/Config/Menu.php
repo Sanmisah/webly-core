@@ -7,13 +7,13 @@ use CodeIgniter\Config\BaseConfig;
 class Menu extends BaseConfig
 {
     public $menu = [
-        'item0' => [
+        'item00' => [
             'menu' => 'Dashboard',
             'url' => '/admin/dashboard',
             'icon' => 'nav-icon fas fa-tachometer-alt',
             'permissions' => ['admin.dashboard']
         ],             
-        'item1' => [
+        'item01' => [
             'menu' => 'Pages',
             'url' => '#',
             'icon' => 'nav-icon fa fa-file',
@@ -45,7 +45,7 @@ class Menu extends BaseConfig
                 ]                                
             ]
         ],
-        'item2' => [
+        'item02' => [
             'menu' => 'Blog',
             'url' => '#',
             'icon' => 'nav-icon fas fa-blog',
@@ -65,7 +65,7 @@ class Menu extends BaseConfig
                 ],
             ]
         ],
-        'item3' => [
+        'item03' => [
             'menu' => 'Gallery',
             'url' => '#',
             'icon' => 'nav-icon fa fa-images',
@@ -85,19 +85,19 @@ class Menu extends BaseConfig
                 ],
             ]
         ],        
-        'item4' => [
+        'item04' => [
             'menu' => 'Forms',
             'url' => '/admin/forms',
             'icon' => 'nav-icon fas fa-id-card',
             'permissions' => ['admin.forms']
         ],             
-        'item95' => [
+        'item91' => [
             'menu' => 'Settings',
             'url' => '/admin/settings',
             'icon' => 'nav-icon fas fa-cog',
             'permissions' => ['admin.settings']
         ],
-        'item96' => [
+        'item92' => [
             'menu' => 'Users',
             'url' => '/admin/users',
             'icon' => 'nav-icon fas fa-user',
