@@ -371,7 +371,7 @@
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://webly.cms">Webly CMS</a>.
+                    Powered by <a href="#">Webly CMS</a>.
                   </td>
                 </tr>
               </table>
