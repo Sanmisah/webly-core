@@ -24,11 +24,11 @@ class BannersController extends BaseController
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
-            foreach($data['sorted'] as $sorOrder => $id) {
-                $data = [
-                    'sort_order' => $sorOrder
+            foreach($data['sorted'] as $sortOrder => $id) {
+                $order = [
+                    'sort_order' => $sortOrder
                 ];
-                $Banners->update((int)$id, $data);
+                $Banners->update((int)$id, $order);
             }
         }  
     }        

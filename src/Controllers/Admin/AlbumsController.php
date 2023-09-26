@@ -50,11 +50,11 @@ class AlbumsController extends BaseController
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
-            foreach($data['sorted'] as $sorOrder => $id) {
-                $data = [
-                    'sort_order' => $sorOrder
+            foreach($data['sorted'] as $sortOrder => $id) {
+                $order = [
+                    'sort_order' => $sortOrder
                 ];
-                $AlbumImages->update((int)$id, $data);
+                $AlbumImages->update((int)$id, $order);
             }
         }  
     }      
@@ -110,7 +110,7 @@ class AlbumsController extends BaseController
         $album = $Albums->find($id);
 
         $AlbumImages = new AlbumImages();
-        $images = $AlbumImages->where('album_id', $id)->find();
+        $images = $AlbumImages->where('album_id', $id)->orderBy('sort_order', 'asc')->find();
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
