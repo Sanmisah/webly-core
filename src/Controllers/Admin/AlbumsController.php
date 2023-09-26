@@ -35,9 +35,9 @@ class AlbumsController extends BaseController
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
-            foreach($data['sorted'] as $sorOrder => $id) {
+            foreach($data['sorted'] as $sortOrder => $id) {
                 $data = [
-                    'sort_order' => $sorOrder
+                    'sort_order' => $sortOrder
                 ];
                 $Albums->update((int)$id, $data);
             }
