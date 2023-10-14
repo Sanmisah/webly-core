@@ -5,6 +5,7 @@ use CodeIgniter\Events\Events;
 
 
 Events::on('form_submission', static function ($data, $form) {
+    helper('email');
     if(!empty($form->email_to)) {
         $email = emailer();
         $email->setFrom(setting('Email.fromEmail'), setting('Email.fromName'));
