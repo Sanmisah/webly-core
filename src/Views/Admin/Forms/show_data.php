@@ -15,6 +15,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Submitted On</th>
                                 <?php foreach($form->form_fields as $field):?>
                                     <th><?= humanize($field->field) ?></th>
@@ -24,6 +25,7 @@
                         <tbody>
                             <?php foreach($data as $row) : ?>
                             <tr>
+                                <td><?= str_pad($row->id, 5, "0", STR_PAD_LEFT) ?></td>
                                 <td><?= $row->created_at->format('d/m/Y h:i A') ?></td>
                                 <?php foreach($form->form_fields as $field): ?>
                                     <td>

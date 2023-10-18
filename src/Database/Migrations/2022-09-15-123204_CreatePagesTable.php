@@ -11,9 +11,9 @@ class CreatePagesTable extends Migration
         // Pages Table
         $this->forge->addField([
             'id'                => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
-            'title'             => ['type' => 'varchar', 'constraint' => 60, 'null' => true],
+            'title'             => ['type' => 'varchar', 'constraint' => 100, 'null' => true],
             'content'           => ['type' => 'text', 'null' => true],
-            'page_title'        => ['type' => 'varchar', 'constraint' => 60, 'null' => true],
+            'page_title'        => ['type' => 'varchar', 'constraint' => 100, 'null' => true],
             'meta_description'  => ['type' => 'varchar', 'constraint' => 160, 'null' => true],
             'layout'            => ['type' => 'varchar', 'constraint' => 60, 'null' => true],
             'visible'           => ['type' => 'tinyint', 'default' => 1],

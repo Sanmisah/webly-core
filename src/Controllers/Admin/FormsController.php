@@ -114,7 +114,7 @@ class FormsController extends BaseController
 		header('Content-Disposition: attachment; filename='.$form->form.'-' . date("Y-m-d-h-i-s") . '.csv');
 		$output = fopen('php://output', 'w');
 
-        $header = ['Submitted On'];
+        $header = ['#', 'Submitted On'];
         foreach($form->form_fields as $field) {
             $header[] = humanize($field->field);
         }
@@ -122,7 +122,8 @@ class FormsController extends BaseController
 
         foreach($data as $row) {
             $record = null;
-            $record[] = $row->created_at;
+            $record[] = "'".str_pad($row->id, 5, "0", STR_PAD_LEFT);
+            $record[] = $row->created_at->format('d/m/Y h:i A');
             foreach($form->form_fields as $field) {
                 $record[] = $row->form_data->{$field->field} ?? '';
             }

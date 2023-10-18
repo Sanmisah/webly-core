@@ -79,7 +79,7 @@ class PagesController extends BaseController
 
             $validate = [
                 'id'    => 'is_natural_no_zero',
-                'title' => 'required|max_length[60]|is_unique[pages.title, id, {id}]',
+                'title' => 'required|max_length[100]|is_unique[pages.title, id, {id}]',
                 'content' => 'required',
                 'featured_image' => [
                     'label' => 'Image File',
@@ -87,7 +87,7 @@ class PagesController extends BaseController
                         . '|mime_in[featured_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[featured_image,1024]'
                 ],
-                'page_title' => 'required|max_length[60]|is_unique[pages.page_title, id, {id}]',
+                'page_title' => 'required|max_length[100]|is_unique[pages.page_title, id, {id}]',
                 'meta_description' => 'required|max_length[160]',
             ];
 
