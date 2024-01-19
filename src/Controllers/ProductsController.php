@@ -26,9 +26,9 @@ class ProductsController extends BaseController
             $collection = $Collections->find($product->collection_id);
             $products[$i]->collection = "";
             if($collection) {
-                $products[$i]->url = "/shop/" . url_title($collection->collection, '-', true) . "/" . url_title($product->product, '-', true);
+                $products[$i]->url = "/products/" . url_title($collection->collection, '-', true) . "/" . url_title($product->product, '-', true);
                 $products[$i]->collection = $collection->collection;
-                $products[$i]->category_url = "/shop/" . url_title($collection->collection, '-', true);
+                $products[$i]->category_url = "/products/" . url_title($collection->collection, '-', true);
             }
         }
 
@@ -65,7 +65,7 @@ class ProductsController extends BaseController
         $Collections = new Collections();
         $collection = $Collections->find($product->collection_id);
         $product->collection = $collection->collection;
-        $product->collection_url = "/blog/" . url_title($collection->collection, '-', true);        
+        $product->collection_url = "/products/" . url_title($collection->collection, '-', true);        
 
         $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'pages' . DIRECTORY_SEPARATOR . $product->layout;
 

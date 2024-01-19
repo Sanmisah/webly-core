@@ -97,7 +97,7 @@ class Webly
         $collections = $Collections->orderBy('collection', 'asc')->findAll();
 
         foreach($collections as $i => $collection) {
-            $collections[$i]->url = "/shop/" . url_title($collection->collection, '-', true);
+            $collections[$i]->url = "/products/" . url_title($collection->collection, '-', true);
         }
 
         return $collections;
