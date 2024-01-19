@@ -99,7 +99,7 @@ class ProductsController extends BaseController
         return view($layout, [
             'title' => $product->page_title, 
             'meta' => $meta,
-            'page' => $product,
+            'product' => $product,
             'blocks' => $blocks
         ]);        
     }

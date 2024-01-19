@@ -5,7 +5,7 @@ namespace Webly\Core\Models;
 class Products extends BaseModel
 {
     protected $table            = 'products';
-    protected $returnType       = \Webly\Core\Entities\Page::class;
+    protected $returnType       = \Webly\Core\Entities\Product::class;
     protected $allowedFields    = ['id', 'product', 'content', 'page_title', 'meta_description', 'layout', 'visible', 'collection_id', 'featured_image', 'rate'];
 
     public function get($collection_id = null) {
