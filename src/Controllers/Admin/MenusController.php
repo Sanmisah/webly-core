@@ -89,7 +89,6 @@ class MenusController extends BaseController
                     } elseif($item->route == '#') {
                         $menuItems[$i]->slug = "#";
                     } else {
-                        debug($item);
                         $menuItems[$i]->slug = url_title($menuItems[$i]->value, '-', true);
                         $this->menuItems[$menuItems[$i]->slug] = $item->value;
                     }
