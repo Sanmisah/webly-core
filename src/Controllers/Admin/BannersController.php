@@ -94,6 +94,7 @@ class BannersController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $banner->fill($data);
 
                 $bannerImage = $this->request->getFile('banner_image');

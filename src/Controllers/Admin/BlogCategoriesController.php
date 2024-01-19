@@ -60,6 +60,7 @@ class BlogCategoriesController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $blogCategory->fill($data);
                 $BlogCategories->save($blogCategory);
 

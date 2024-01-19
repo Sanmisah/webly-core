@@ -63,6 +63,7 @@ class UsersController extends BaseController
             $inputs = $this->validate($validation);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $user->fill($data);
                 $Users->save($user);
                 $user->syncGroups(...$data['group']);

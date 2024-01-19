@@ -9,6 +9,7 @@ use Webly\Core\Models\Pages;
 
 use Webly\Core\Models\GalleryCategories;
 use Webly\Core\Models\Albums;
+use Webly\Core\Models\Collections;
 
 class Registrar
 {
@@ -32,6 +33,8 @@ class Registrar
     {
         $items = [];
 
+        $items['#'] = "#";
+
         // Add Page Links
         $Pages = new Pages();
         $pages = $Pages->where('visible', 1)->findAll();
@@ -44,7 +47,7 @@ class Registrar
         $items['\Webly\Core\Controllers\BlogController::index'] = 'Blog';
 
         // Add Gallery Links
-        $items['Gallery']['/gallery'] = 'All Categories';
+        $items['Gallery']['/gallery'] = 'All Categories';        
 
         $GalleryCategories = new GalleryCategories();
         $categories = $GalleryCategories->orderBy('sort_order', 'ASC')->findAll();
@@ -60,6 +63,14 @@ class Registrar
             $category = $GalleryCategories->find($album->gallery_category_id);
             $items['Albums']["/gallery/" . url_title($category->category, '-', true) . "/" . url_title($album->album, '-', true)] = $album->album;
         }
+
+        // Add Shop Links
+        $Collections = new Collections();
+        $collections = $Collections->findAll();
+        
+        foreach($collections as $collection) {
+            $items['Shop']['/products/' . url_title($collection->collection)] = $collection->collection;
+        }        
 
         return [
             'items' => $items

@@ -8,6 +8,9 @@ use Webly\Core\Models\Forms;
 use Webly\Core\Models\GalleryCategories;
 use Webly\Core\Models\Albums;
 
+use Webly\Core\Models\Collections;
+use Webly\Core\Models\Products;
+
 // service('auth')->routes($routes);
 
 $routes->group('admin', function ($routes) {
@@ -79,6 +82,16 @@ $routes->group('admin', function ($routes) {
     $routes->get('forms/export/(:num)', '\Webly\Core\Controllers\Admin\FormsController::exportData/$1', ['filter' => 'permission:admin.forms']);
     $routes->get('forms/delete/(:num)', '\Webly\Core\Controllers\Admin\FormsController::delete/$1', ['filter' => 'permission:admin.forms']);
 
+    $routes->get('collections', '\Webly\Core\Controllers\Admin\CollectionsController::index', ['filter' => 'permission:admin.shop']);
+    $routes->match(['get', 'post'], 'collections/create', '\Webly\Core\Controllers\Admin\CollectionsController::create', ['filter' => 'permission:admin.shop']);
+    $routes->match(['get', 'post'], 'collections/update/(:num)', '\Webly\Core\Controllers\Admin\CollectionsController::update/$1', ['filter' => 'permission:admin.shop']);
+    $routes->get('collections/delete/(:num)', '\Webly\Core\Controllers\Admin\CollectionsController::delete/$1', ['filter' => 'permission:admin.shop']);
+
+    $routes->get('products', '\Webly\Core\Controllers\Admin\ProductsController::index', ['filter' => 'permission:admin.shop']);
+    $routes->match(['get', 'post'], 'products/create', '\Webly\Core\Controllers\Admin\ProductsController::create', ['filter' => 'permission:admin.shop']);
+    $routes->match(['get', 'post'], 'products/update/(:num)', '\Webly\Core\Controllers\Admin\ProductsController::update/$1', ['filter' => 'permission:admin.shop']);
+    $routes->get('products/delete/(:num)', '\Webly\Core\Controllers\Admin\ProductsController::delete/$1', ['filter' => 'permission:admin.shop']);
+
     $routes->get('users', '\Webly\Core\Controllers\Admin\UsersController::index', ['filter' => 'permission:admin.users']);
     $routes->match(['get', 'post'], 'users/create', '\Webly\Core\Controllers\Admin\UsersController::create', ['filter' => 'permission:admin.users']);
     $routes->match(['get', 'post'], 'users/update/(:num)', '\Webly\Core\Controllers\Admin\UsersController::update/$1', ['filter' => 'permission:admin.users']);
@@ -90,44 +103,7 @@ $routes->group('admin', function ($routes) {
 
 $routes->match(['get', 'post'], 'search', "\Webly\Core\Controllers\SearchController::index", ['filter' => 'visits']);
 
-// Pages Routes
 $db = \Config\Database::connect();
-$query = $db->query("SHOW TABLES LIKE 'menus'");
-
-// Checks menus table exists before migration
-if(!empty($query->getResult())) {
-    $Menus = new Menus();
-    $menus = $Menus->findAll();
-
-    function getChildren($items, &$routes) {
-        if(!empty($items)) {
-            foreach($items as $item) {        
-                if($item->slug != "#") {
-                    if(substr($item->route, 0, 1 ) != "/") {
-                        $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
-                    }
-                }
-                getChildren($item->children, $routes);
-            }
-        } else {
-            return false;
-        }
-    }
-
-    foreach($menus as $menu) {        
-        $menuItems = json_decode($menu->menu_items);
-        foreach($menuItems as $item) {
-            if($item->slug != "#") {
-                if(substr($item->route, 0, 1 ) != "/") {
-                    $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
-                }
-            }
-            getChildren($item->children, $routes);
-        }
-    }
-}
-
-
 // Blog Routes
 $query = $db->query("SHOW TABLES LIKE 'blog_posts'");
 if(!empty($query->getResult())) {
@@ -183,6 +159,67 @@ if(!empty($query->getResult())) {
         $routes->get($slug, "\Webly\Core\Controllers\GalleryController::display_albums/{$album->id}", ['filter' => 'visits']);
     }
 }
+
+// Products Routes
+$query = $db->query("SHOW TABLES LIKE 'products'");
+if(!empty($query->getResult())) {
+    $Collections = new Collections();    
+
+    $collections = $Collections->findAll();
+    foreach($collections as $collection) {
+        $slug = "products/" . url_title($collection->collection, '-', true);
+        // debug("\Webly\Core\Controllers\ProductsController::index/{$collection->id}");
+        // debug($slug);
+        $routes->get($slug, "\Webly\Core\Controllers\ProductsController::index/{$collection->id}", ['filter' => 'visits']);
+    }
+
+    $Products = new Products();
+    $products = $Products->findAll();
+
+    foreach($products as $product) {
+        $collection = $Collections->find($product->collection_id);
+        $slug = "products/" . url_title($collection->collection, '-', true) . "/" . url_title($product->product, '-', true);
+        $routes->get($slug, "\Webly\Core\Controllers\ProductsController::display/{$product->id}", ['filter' => 'visits']);
+    }
+}
+
+// Pages Routes
+$query = $db->query("SHOW TABLES LIKE 'menus'");
+
+// Checks menus table exists before migration
+if(!empty($query->getResult())) {
+    $Menus = new Menus();
+    $menus = $Menus->findAll();
+
+    function getChildren($items, &$routes) {
+        if(!empty($items)) {
+            foreach($items as $item) {        
+                if($item->slug != "#") {
+                    if(substr($item->route, 0, 1 ) != "/") {
+                        $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                    }
+                }
+                getChildren($item->children, $routes);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    foreach($menus as $menu) {        
+        $menuItems = json_decode($menu->menu_items);
+        foreach($menuItems as $item) {
+            if($item->slug != "#") {
+                if(substr($item->route, 0, 1 ) != "/") {
+                    $routes->get("{$item->slug}", "{$item->route}", ['filter' => 'visits']);
+                }
+            }
+            getChildren($item->children, $routes);
+        }
+    }
+}
+
+
 
 $routes->set404Override(static function () {
     echo view($layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR . 'error_404');

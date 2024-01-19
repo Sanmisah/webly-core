@@ -128,6 +128,7 @@ class AlbumsController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $album->fill($data);
 
                 $albumImage = $this->request->getFile('album_image');

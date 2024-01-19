@@ -72,7 +72,7 @@ class Menu extends BaseConfig
             'permissions' => ['admin.gallery'],
             'submenu' => [                
                 'Categories' => [
-                    'menu' => 'Category',
+                    'menu' => 'Categories',
                     'url' => '/admin/gallery-categories',
                     'icon' => 'nav-icon fas fa-th-list',
                     'permissions' => ['admin.gallery']
@@ -90,7 +90,27 @@ class Menu extends BaseConfig
             'url' => '/admin/forms',
             'icon' => 'nav-icon fas fa-id-card',
             'permissions' => ['admin.forms']
-        ],             
+        ],  
+        'item05' => [
+            'menu' => 'Shop',
+            'url' => '#',
+            'icon' => 'nav-icon fa fa-images',
+            'permissions' => ['admin.shop'],
+            'submenu' => [                
+                'Collections' => [
+                    'menu' => 'Collections',
+                    'url' => '/admin/collections',
+                    'icon' => 'nav-icon fas fa-th-list',
+                    'permissions' => ['admin.shop']
+                ],
+                'Products' => [
+                    'menu' => 'Products',
+                    'url' => '/admin/products',
+                    'icon' => 'nav-icon fas fa-images',
+                    'permissions' => ['admin.shop']
+                ],
+            ]
+        ],                       
         'item91' => [
             'menu' => 'Settings',
             'url' => '/admin/settings',

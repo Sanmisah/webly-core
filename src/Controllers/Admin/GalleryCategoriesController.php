@@ -51,6 +51,7 @@ class GalleryCategoriesController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $galleryCategory->fill($data);
                 
                 $galleryCategoryImage = $this->request->getFile('category_image');

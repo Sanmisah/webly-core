@@ -4,33 +4,33 @@ namespace Webly\Core\Controllers\Admin;
 
 use CodeIgniter\Files\File;
 use Webly\Core\Controllers\BaseController;
-use Webly\Core\Models\Pages;
-use Webly\Core\Models\PageBlocks;
+use Webly\Core\Models\Products;
+use Webly\Core\Models\ProductBlocks;
 
-class PagesController extends BaseController
+class ProductsController extends BaseController
 {
     public function index()
     {
-        $Pages = new Pages();
+        $Products = new Products();
 
-        return view('Webly\Core\Views\Admin\Pages\index', [
-            'title' => 'Pages', 
-            'pages' => $Pages->paginate(),
-            'pager' => $Pages->pager
+        return view('Webly\Core\Views\Admin\Products\index', [
+            'title' => 'Products', 
+            'products' => $Products->paginate(),
+            'pager' => $Products->pager
         ]);
     }
 
     public function create()
     {
-        $Pages = new Pages();
-        $page = $Pages->newEntity();
-        $page->visible = true;
+        $Products = new Products();
+        $product = $Products->newEntity();
+        $product->visible = true;
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
 
             $inputs = $this->validate([
-                'title' => 'required|max_length[60]|is_unique[pages.title]',
+                'product' => 'required|max_length[60]|is_unique[products.product]',
                 'content' => 'required',                
                 'featured_image' => [
                     'label' => 'Image File',
@@ -38,48 +38,48 @@ class PagesController extends BaseController
                         . '|mime_in[featured_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[featured_image,500]'
                 ],
-                'page_title' => 'required|max_length[60]|is_unique[pages.page_title, id, {id}]',
+                'page_title' => 'required|max_length[60]|is_unique[products.page_title, id, {id}]',
                 'meta_description' => 'required|max_length[160]',
             ]);
 
             if($inputs) {
-                $page->fill($data);
+                $product->fill($data);
 
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
                     $newName = $featuredImage->getRandomName();
                     $featuredImage->move("uploads/", $newName);                    
-                    $page->featured_image = 'uploads/' . $newName;
+                    $product->featured_image = 'uploads/' . $newName;
                 }
-                $Pages->save($page);
+                $Products->save($product);
 
-                return redirect()->to('/admin/pages/update/'.$Pages->insertID())->with('success', 'Saved successfully');
+                return redirect()->to('/admin/products/update/'.$Products->insertID())->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/pages/create')->withInput()->with('error', 'Could not be saved');
+                return redirect()->to('/admin/products/create')->withInput()->with('error', 'Could not be saved');
             }
                         
         }
 
-        return view('Webly\Core\Views\Admin\Pages\create', [
-            'title' => 'Pages', 
-            'page' => $page
+        return view('Webly\Core\Views\Admin\Products\create', [
+            'title' => 'Products', 
+            'product' => $product
         ]);        
     }    
 
     public function update($id)
     {
-        $Pages = new Pages();
-        $page = $Pages->find($id);
+        $Products = new Products();
+        $product = $Products->find($id);
 
-        $PageBlocks = new PageBlocks();
-        $pageBlocks = $PageBlocks->where('page_id', $id)->findAll();
+        $ProductBlocks = new ProductBlocks();
+        $productBlocks = $ProductBlocks->where('product_id', $id)->findAll();
 
         if ($this->request->getMethod() === 'post') {
             $data = $this->request->getPost();
 
             $validate = [
                 'id'    => 'is_natural_no_zero',
-                'title' => 'required|max_length[100]|is_unique[pages.title, id, {id}]',
+                'product' => 'required|max_length[100]|is_unique[products.product, id, {id}]',
                 'content' => 'required',
                 'featured_image' => [
                     'label' => 'Image File',
@@ -87,7 +87,7 @@ class PagesController extends BaseController
                         . '|mime_in[featured_image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                         . '|max_size[featured_image,1024]'
                 ],
-                'page_title' => 'required|max_length[100]|is_unique[pages.page_title, id, {id}]',
+                'page_title' => 'required|max_length[100]|is_unique[products.page_title, id, {id}]',
                 'meta_description' => 'required|max_length[160]',
             ];
 
@@ -118,52 +118,51 @@ class PagesController extends BaseController
                 }                
                 unset($pageData['csrf_test_name']);
 
-                $page->fill($pageData);
+                $product->fill($pageData);
                 
                 $featuredImage = $this->request->getFile('featured_image');
                 if ($featuredImage->isValid() && !$featuredImage->hasMoved()) {
                     $newName = $featuredImage->getRandomName();
                     $path = 'uploads/'.date('dmY').'/';
                     $featuredImage->move($path, $newName);                    
-                    $page->featured_image = $path . $newName;
+                    $product->featured_image = $path . $newName;
                 }
                 
                 if(!empty($data['remove_featured_image']) && $data['remove_featured_image'] == 1) {
-                    $page->featured_image = null;
+                    $product->featured_image = null;
                 }
-                $Pages->save($page);
+                $Products->save($product);
 
                 for($i=0; $i<=count($pgIds); $i++) {
                     if(!empty($data['pg_' . $i . '_block'])) {
-                        $pageBlock = [
+                        $productBlock = [
                             'id' => $data['pg_' . $i . '_id'],
-                            'page_id' => $data['id'],
+                            'product_id' => $data['id'],
                             'block' => $data['pg_' . $i . '_block'],
                             'content' => $data['pg_' . $i . '_content'],
                         ];
-
-                        $PageBlocks->save($pageBlock);
+                        $ProductBlocks->save($productBlock);
                     }
                 }
 
-                return redirect()->to('/admin/pages')->with('success', 'Saved successfully');
+                return redirect()->to('/admin/products')->with('success', 'Saved successfully');
             } else {
-                return redirect()->to('/admin/pages/update/'.$id)->withInput()->with('error', 'Could not be saved');
+                return redirect()->to('/admin/products/update/'.$id)->withInput()->with('error', 'Could not be saved');
             }
                         
         }
 
-        return view('Webly\Core\Views\Admin\Pages\update', [
-            'title' => 'Pages', 
-            'page' => $page,
-            'pageBlocks' => $pageBlocks
+        return view('Webly\Core\Views\Admin\Products\update', [
+            'title' => 'Products', 
+            'product' => $product,
+            'productBlocks' => $productBlocks
         ]);        
     }
 
     public function delete($id)
     {
-        $Pages = new Pages();
-        $Pages->delete($id);
-        return redirect()->to('/admin/pages')->with('success', 'Successfully Deleted');
+        $Products = new Products();
+        $Products->delete($id);
+        return redirect()->to('/admin/products')->with('success', 'Successfully Deleted');
     }
 }

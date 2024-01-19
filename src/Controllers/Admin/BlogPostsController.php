@@ -94,6 +94,7 @@ class BlogPostsController extends BaseController
             $inputs = $this->validate($validate);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $blogPost->fill($data);
                 
                 $featuredImage = $this->request->getFile('featured_image');

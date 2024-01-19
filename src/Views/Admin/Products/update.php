@@ -11,7 +11,7 @@
                             <a class="nav-link active" id="main-tab" data-toggle="pill" href="#main" role="tab" aria-controls="main" aria-selected="true">Main</a>
                         </li>
                         <?php $i = -1; ?>
-                        <?php foreach($pageBlocks as $i => $block): ?>
+                        <?php foreach($productBlocks as $i => $block): ?>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab-block-<?=$i+1?>" data-toggle="pill" href="#block-<?=$i+1?>" role="tab" aria-controls="block-<?=$i+1?>" aria-selected="false"><?= $block->block ?></a>
                             </li>
@@ -25,18 +25,18 @@
                     <div class="tab-content" id="custom-tabs-three-tabContent">
                         <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
                             <?php 
-                                echo isset($page->id) ? form_hidden('id', $page->id) : ''; 
+                                echo isset($product->id) ? form_hidden('id', $product->id) : ''; 
 
-                                echo input('title', [                                
+                                echo input('product', [                                
                                     'input' => [
-                                        'value'=> $page->title, 
+                                        'value'=> $product->product, 
                                     ]
                                 ]);         
                                 
                                 echo input('content', [
                                     'input' => [
                                         'rows'=>5,
-                                        'value'=> $page->content,
+                                        'value'=> $product->content,
                                         'class' => 'tinymce',
                                         'html_escape' => false
                                     ]
@@ -45,7 +45,7 @@
                             ?>                    
                         </div>
                         <?php $i = -1; ?>
-                        <?php foreach($pageBlocks as $i => $block): ?>
+                        <?php foreach($productBlocks as $i => $block): ?>
                             <div class="tab-pane fade" id="block-<?=$i+1?>" role="tabpanel" aria-labelledby="tab-block-<?=$i+1?>">
                                 <?php
                                     echo form_hidden("pg_".$i."_id", $block->id); 
@@ -89,14 +89,14 @@
                     <?php                   
                         echo input('page_title', [                                
                             'input' => [
-                                'value'=> $page->page_title, 
+                                'value'=> $product->page_title, 
                             ]
                         ]);
                         
                         echo input('meta_description', [
                             'input' => [
                                 'rows'=>2,
-                                'value'=> $page->meta_description,
+                                'value'=> $product->meta_description,
                                 'html_escape' => true
                             ]
                         ], 
@@ -108,21 +108,44 @@
         <div class="col-lg-3">
             <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">Product Visibility</h3>
+                    <h3 class="card-title">Page Visibility</h3>
                 </div>
                 <div class="card-body">                
                     <div class="form-group">
                         <div class="custom-control custom-radio">
-                            <?= form_radio('visible', 1, $page->visible ? true : false, ['id'=>'visible-true', 'class'=>'custom-control-input']); ?>
+                            <?= form_radio('visible', 1, $product->visible ? true : false, ['id'=>'visible-true', 'class'=>'custom-control-input']); ?>
                             <?= form_label('Show', 'visible-true', ['class' => 'custom-control-label']); ?>                            
                         </div>
                         <div class="custom-control custom-radio">
-                            <?= form_radio('visible', 0, !$page->visible ? true : false, ['id'=>'visible-false', 'class'=>'custom-control-input']); ?>
+                            <?= form_radio('visible', 0, !$product->visible ? true : false, ['id'=>'visible-false', 'class'=>'custom-control-input']); ?>
                             <?= form_label('Hide', 'visible-false', ['class' => 'custom-control-label']); ?>                            
                         </div>                        
                     </div>                                     
                 </div>
             </div>
+
+            <div class="card card-primary card-outline">
+                <div class="card-body">                
+                    <?php
+                        echo input('collection_id', [
+                            'label' => [
+                                'label' => 'Collection'
+                            ],
+                            'input' => [
+                                'value'=> $product->collection_id, 
+                                'options' => service('webly')->getCollectionsList()
+                            ]
+                        ],
+                        'select');     
+                        
+                        echo input('rate', [                                
+                            'input' => [
+                                'value'=> $product->rate, 
+                            ]
+                        ]);                         
+                    ?>
+                </div>
+            </div>                    
             
             <div class="card card-primary card-outline">
                 <div class="card-header">
@@ -130,8 +153,8 @@
                 </div>
                 <div class="card-body">                
                     <?= input('featured_image', ['help' => "Recommended featured image size is " . template_info('image-size.page_featured_image') . "px"], 'file') ?>
-                    <?php if($page->featured_image) : ?>
-                        <?= img($page->featured_image, false, ['class'=>'img-fluid']) ?>
+                    <?php if($product->featured_image) : ?>
+                        <?= img($product->featured_image, false, ['class'=>'img-fluid']) ?>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox" name="remove_featured_image" id="remove_featured_image" value=1>
@@ -150,7 +173,7 @@
                     <?php
                         echo input('layout', [
                             'input' => [
-                                'value'=> $page->layout, 
+                                'value'=> $product->layout, 
                                 'options' => service('webly')->getLayouts()
                             ]
                         ],

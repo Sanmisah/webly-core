@@ -91,6 +91,37 @@ class Webly
         return $categories;
     }
 
+    public function getCollections()
+    {
+        $Collections = new \Webly\Core\Models\Collections();
+        $collections = $Collections->orderBy('collection', 'asc')->findAll();
+
+        foreach($collections as $i => $collection) {
+            $collections[$i]->url = "/shop/" . url_title($collection->collection, '-', true);
+        }
+
+        return $collections;
+    }    
+
+    public function getCollectionsList($empty = false)
+    {
+        $Collections = new \Webly\Core\Models\Collections();
+        // $collections = $Collections->orderBy('sort_order', 'asc')->findAll();
+        $collections = $Collections->findAll();
+
+        $collectionsList = [];
+
+        if($empty) {
+            $collectionsList[''] = '(select)';
+        }
+
+        foreach($collections as $collection) {
+            $collectionsList[$collection->id] = $collection->collection;
+        }
+
+        return $collectionsList;
+    }    
+
     function convertAmountToWords($number)
     {
         $decimal = round($number - ($no = floor($number)), 2) * 100;

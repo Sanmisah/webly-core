@@ -45,6 +45,9 @@ class BaseModel extends Model
     public function save($data): bool
     {
         if(gettype($data) == 'array') {
+            if(empty($data['id'])) {
+                unset($data['id']);
+            }
             return parent::save($data);
         }
 

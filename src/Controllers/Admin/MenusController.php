@@ -78,6 +78,7 @@ class MenusController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $menu->fill($data);                
                 $menuItems = json_decode($menu->menu_items);
 
@@ -88,14 +89,13 @@ class MenusController extends BaseController
                     } elseif($item->route == '#') {
                         $menuItems[$i]->slug = "#";
                     } else {
+                        debug($item);
                         $menuItems[$i]->slug = url_title($menuItems[$i]->value, '-', true);
                         $this->menuItems[$menuItems[$i]->slug] = $item->value;
                     }
                     $this->getChildren($menuItems[$i]);
                 }
 
-                // debug($this->menuItems);
-                // debug($menuItems); exit;
                 $menu->menu_items = json_encode($menuItems);
 
                 $Menus->save($menu);

@@ -64,6 +64,7 @@ class FormsController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $form->fill($data);
                 $Forms->save($form);                
 

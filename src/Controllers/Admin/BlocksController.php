@@ -63,6 +63,7 @@ class BlocksController extends BaseController
             ]);
 
             if($inputs) {
+                unset($data['csrf_test_name']);
                 $block->fill($data);
                 $Blocks->save($block);
 
