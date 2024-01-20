@@ -98,10 +98,18 @@ $routes->group('admin', function ($routes) {
     $routes->get('users/delete/(:num)', '\Webly\Core\Controllers\Admin\UsersController::delete/$1', ['filter' => 'permission:admin.users']);
 
     $routes->get('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);
-    $routes->post('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);  
+    $routes->post('settings', '\Webly\Core\Controllers\Admin\SettingsController::update', ['filter' => 'permission:admin.settings']);      
 });
 
 $routes->match(['get', 'post'], 'search', "\Webly\Core\Controllers\SearchController::index", ['filter' => 'visits']);
+
+$routes->post('/shop/add_to_cart', '\Webly\Core\Controllers\ShopController::add_to_cart');  
+$routes->get('/shop/delete', '\Webly\Core\Controllers\ShopController::delete');  
+$routes->get('/shop/cart', '\Webly\Core\Controllers\ShopController::cart');  
+
+$routes->post('/orders/add', '\Webly\Core\Controllers\OrdersController::create');  
+$routes->get('/orders/payment/(:num)', '\Webly\Core\Controllers\OrdersController::payment/$1');  
+
 
 $db = \Config\Database::connect();
 // Blog Routes

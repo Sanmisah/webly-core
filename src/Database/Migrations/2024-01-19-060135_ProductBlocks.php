@@ -18,7 +18,6 @@ class ProductBlocks extends Migration
             'updated_at'        => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey(['block']);
         $this->forge->createTable('product_blocks', true);        
     }
 
