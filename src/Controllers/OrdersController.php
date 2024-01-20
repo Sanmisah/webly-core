@@ -69,7 +69,7 @@ class OrdersController extends BaseController
     
     public function payment()
     {
-        $layout = service('settings')->get('App.template') . 'shop' . DIRECTORY_SEPARATOR . 'payment';
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR . 'payment';
 
         $url =  site_url($this->request->getUri()->getPath());
 
