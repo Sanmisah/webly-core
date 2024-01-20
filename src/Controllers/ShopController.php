@@ -20,6 +20,9 @@ class ShopController extends BaseController
             $cart = $session->get('cart');
             
             $found = false;
+
+            $productIds = [];
+
             if(!empty($cart)) {
                 $productIds = dot_array_search("*.product_id", $cart);
             }
