@@ -105,6 +105,7 @@ $routes->match(['get', 'post'], 'search', "\Webly\Core\Controllers\SearchControl
 
 $routes->post('/shop/add_to_cart', '\Webly\Core\Controllers\ShopController::add_to_cart');  
 $routes->get('/shop/delete', '\Webly\Core\Controllers\ShopController::delete');  
+$routes->get('/shop/delete_from_cart/(:num)', '\Webly\Core\Controllers\ShopController::delete_from_cart/$1');  
 $routes->get('/shop/cart', '\Webly\Core\Controllers\ShopController::cart');  
 
 $routes->post('/orders/add', '\Webly\Core\Controllers\OrdersController::create');  

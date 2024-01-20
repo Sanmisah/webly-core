@@ -59,6 +59,7 @@ class OrdersController extends BaseController
 
                 $session->remove('cart');
                 $session->remove('cart_count');                
+                $session->remove('total_amount');                
 
                 return redirect()->to('/orders/payment/'.$Orders->insertID())->with('success', 'Saved successfully');
             } else {

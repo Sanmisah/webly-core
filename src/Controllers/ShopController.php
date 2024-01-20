@@ -55,8 +55,13 @@ class ShopController extends BaseController
             $data['amount'] = $data['qty'] * $data['rate'];
             $data['featured_image'] = $product->featured_image;
             $cart[] = $data;
+
+            $amounts = dot_array_search("*.amount", $cart);
+            $total_amount = is_array($amounts) ? array_sum($amounts) : $amounts;
+            
             $session->set('cart', $cart);
             $session->set('cart_count', count($cart));
+            $session->set('total_amount', $total_amount);
 
             $response = [
                 'status' => true,
@@ -68,10 +73,41 @@ class ShopController extends BaseController
         }
     }
 
+    public function delete_from_cart($product_id)
+    {
+        $session = session();
+        $cart = $session->get('cart');
+
+        foreach($cart as $i => $product) {
+            if($product['product_id'] == $product_id) {
+                break;
+            }
+        }
+        unset($cart[$i]);
+
+        $amounts = dot_array_search("*.amount", $cart);
+        $total_amount = is_array($amounts) ? array_sum($amounts) : $amounts;
+        
+        $session->set('cart', $cart);
+        $session->set('cart_count', count($cart));
+        $session->set('total_amount', $total_amount);
+
+        $response = [
+            'status' => false,
+            'message' => 'Product is deleted from Cart',
+            'cart_count' => count($cart)
+        ];
+
+        return $this->response->setJSON($response);
+
+    }    
+
     public function delete() {
         $session = session();        
         $session->remove('cart');
         $session->remove('cart_count');
+        $session->remove('total_amount');                
+        
         exit;
     }
 
