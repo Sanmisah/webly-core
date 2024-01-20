@@ -37,8 +37,8 @@ class OrdersController extends BaseController
                 
                 $order->fill($data);
 
-                $order->gross_amount = array_sum($amounts);
-                $order->net_amount = array_sum($amounts);
+                $order->gross_amount = $session->get('total_amount');
+                $order->net_amount = $session->get('total_amount');
 
                 $Orders->save($order);
 
