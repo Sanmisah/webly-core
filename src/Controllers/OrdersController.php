@@ -20,13 +20,13 @@ class OrdersController extends BaseController
 
             $inputs = $this->validate([
                 'first_name' => ['label' => 'First Name', 'rules' => 'required|alpha'],
-                'last_name' => ['label' => 'Last Name', 'rules' => 'required|alpha'],
-                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
-                'mobile' => ['label' => 'Mobile', 'rules' => 'required|valid_mobile'],
-                'address_line_1' => ['label' => 'Address Line 1', 'rules' => 'required'],
-                'city' => ['label' => 'city', 'rules' => 'required'],
-                'state' => ['label' => 'State', 'rules' => 'required'],
-                'pincode' => ['label' => 'Pincode', 'rules' => 'required|is_natural|max_length[6]|min_length[6]']
+                // 'last_name' => ['label' => 'Last Name', 'rules' => 'required|alpha'],
+                // 'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                // 'mobile' => ['label' => 'Mobile', 'rules' => 'required|valid_mobile'],
+                // 'address_line_1' => ['label' => 'Address Line 1', 'rules' => 'required'],
+                // 'city' => ['label' => 'City', 'rules' => 'required'],
+                // 'state' => ['label' => 'State', 'rules' => 'required'],
+                // 'pincode' => ['label' => 'Pincode', 'rules' => 'required|is_natural|max_length[6]|min_length[6]']
             ]);
 
             if($inputs) {
@@ -59,9 +59,9 @@ class OrdersController extends BaseController
 
                 $session->remove('cart');
                 $session->remove('cart_count');                
-                $session->remove('total_amount');                
-
-                return redirect()->to('/orders/payment/'.$Orders->insertID())->with('success', 'Saved successfully');
+                $session->remove('total_amount');        
+                
+                return redirect()->to('/orders/payment/'.$order_id)->with('success', 'Saved successfully');
             } else {
                 return redirect()->to('/shop/cart')->withInput()->with('error', 'Could not be saved');
             }                        
