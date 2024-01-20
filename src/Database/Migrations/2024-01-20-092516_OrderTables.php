@@ -17,8 +17,8 @@ class OrderTables extends Migration
             'last_name'       => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
             'email'   => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
             'mobile'          => ['type' => 'varchar', 'constraint' => 10, 'null' => true],
-            'adddress_line_1'          => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
-            'adddress_line_2'          => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
+            'address_line_1'          => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
+            'address_line_2'          => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
             'city'          => ['type' => 'varchar', 'constraint' => 200, 'null' => true],
             'state'          => ['type' => 'varchar', 'constraint' => 100, 'null' => true],
             'pincode'          => ['type' => 'varchar', 'constraint' => 6, 'null' => true],
@@ -48,7 +48,7 @@ class OrderTables extends Migration
 
     public function down()
     {
-        $this->forge->createTable('orders', true);      
-        $this->forge->createTable('order_details', true);      
+        $this->forge->dropTable('orders', true);      
+        $this->forge->dropTable('order_details', true);      
     }
 }
