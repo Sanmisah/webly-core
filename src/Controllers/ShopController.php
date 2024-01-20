@@ -77,7 +77,7 @@ class ShopController extends BaseController
 
     public function cart()
     {
-        $layout = service('settings')->get('App.template') . 'shop' . DIRECTORY_SEPARATOR . 'cart';
+        $layout = service('settings')->get('App.template') . DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR . 'cart';
 
         $url =  site_url($this->request->getUri()->getPath());
 
