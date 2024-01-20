@@ -95,7 +95,8 @@ class ShopController extends BaseController
         $response = [
             'status' => false,
             'message' => 'Product is deleted from Cart',
-            'cart_count' => count($cart)
+            'cart_count' => count($cart),
+            'total_amount' => $total_amount
         ];
 
         return $this->response->setJSON($response);
