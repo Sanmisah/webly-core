@@ -19,14 +19,14 @@ class OrdersController extends BaseController
             $data = $this->request->getPost();
 
             $inputs = $this->validate([
-                'first_name' => 'required|alpha',
-                // 'last_name' => 'required|alpha',
-                // 'email' => 'required|valid_email',
-                // 'mobile' => 'required|valid_mobile',
-                // 'address_line_1' => 'required',
-                // 'city' => 'required',
-                // 'state' => 'required',
-                // 'pincode' => 'required|is_natural|max_length[6]'
+                'first_name' => ['label' => 'First Name', 'rules' => 'required|alpha'],
+                'last_name' => ['label' => 'First Name', 'rules' => 'required|alpha'],
+                'email' => ['label' => 'First Name', 'rules' => 'required|valid_email'],
+                'mobile' => ['label' => 'First Name', 'rules' => 'required|valid_mobile'],
+                'address_line_1' => ['label' => 'First Name', 'rules' => 'required'],
+                'city' => ['label' => 'First Name', 'rules' => 'required'],
+                'state' => ['label' => 'First Name', 'rules' => 'required'],
+                'pincode' => ['label' => 'First Name', 'rules' => 'required|is_natural|max_length[6]]']
             ]);
 
             if($inputs) {
