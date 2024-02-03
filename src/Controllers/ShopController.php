@@ -22,39 +22,33 @@ class ShopController extends BaseController
             $found = false;
 
             $productIds = [];
-
             if(!empty($cart)) {
-                $productIds = dot_array_search("*.product_id", $cart);
+                $ids = dot_array_search("*.product_id", $cart);
+                if(!is_array($ids)) { 
+                    $productIds[] = $ids; 
+                } else {
+                    $productIds = $ids; 
+                }
             }
 
-            if(is_array($productIds)) {
-                if(in_array($data['product_id'], $productIds)) {
-                    $found = true;
+            if(in_array($data['product_id'], $productIds)) {
+                $found = true;
+                foreach($cart as $i => $product) {
+                    if($data['product_id'] == $product['product_id']) {
+                        $cart[$i]['qty'] = $data['qty'];
+                        $cart[$i]['amount'] = $cart[$i]['qty'] * $cart[$i]['rate'];
+                    }
                 }
             } else {
-                if($data['product_id'] == $productIds) {
-                    $found = true;
-                }
+                $Products = new Products();
+                $product = $Products->find($data['product_id']);
+    
+                $data['product'] = $product->product;
+                $data['rate'] = $product->rate;
+                $data['amount'] = $data['qty'] * $data['rate'];
+                $data['featured_image'] = $product->featured_image;
+                $cart[] = $data;
             }
-
-            if($found) {
-                $response = [
-                    'status' => false,
-                    'message' => 'Product is already in the Cart',
-                    'cart_count' => count($cart)
-                ];
-
-                return $this->response->setJSON($response);
-            }
-
-            $Products = new Products();
-            $product = $Products->find($data['product_id']);
-
-            $data['product'] = $product->product;
-            $data['rate'] = $product->rate;
-            $data['amount'] = $data['qty'] * $data['rate'];
-            $data['featured_image'] = $product->featured_image;
-            $cart[] = $data;
 
             $amounts = dot_array_search("*.amount", $cart);
             $total_amount = is_array($amounts) ? array_sum($amounts) : $amounts;
@@ -65,7 +59,7 @@ class ShopController extends BaseController
 
             $response = [
                 'status' => true,
-                'message' => "{$product->product} has been added to your cart.",
+                'message' => "Product has been added to your cart.",
                 'cart_count' => count($cart)
             ];            
 
