@@ -73,8 +73,6 @@ class SearchController extends BaseController
                     ];                    
                 }
             }
-
-            print_r($result); exit;
         }
 
         return view($layout, [
