@@ -139,6 +139,7 @@ class AlbumsController extends BaseController
                     $album->album_image = $path . $newName;
                 }
 
+                unset($album->images);
                 $Albums->save($album);
 
                 if(!empty($data['images'])) {
